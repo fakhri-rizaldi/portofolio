@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fakhri - Portofolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3b82f6',
+                        secondary: '#64748b',
+                        dark: '#0f172a',
+                        darker: '#020617',
+                        card: '#1e293b',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        // Check local storage or system preference
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark')
+        } else {
+            document.documentElement.classList.remove('dark')
+        }
+
+    </script>
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <style>
+        body { font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        
+        /* Custom Animations */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        .animate-float { animation: float 6s ease-in-out infinite; }
+        
+        @keyframes float-delayed {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        .animate-float-delayed { animation: float-delayed 7s ease-in-out infinite; animation-delay: 2s; }
+
+        @keyframes blob {
+            0% { transform: translate(0px, 0px) scale(1); }
+            33% { transform: translate(30px, -50px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+            100% { transform: translate(0px, 0px) scale(1); }
+        }
+        .animate-blob { animation: blob 7s infinite; }
+
+        @keyframes gradient-x {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        .animate-gradient-x { background-size: 200% 200%; animation: gradient-x 15s ease infinite; }
+
+        /* Typing Effect */
+        .typing-effect {
+            overflow: hidden;
+            border-right: .15em solid orange;
+            white-space: nowrap;
+            margin: 0;
+            letter-spacing: .05em; 
+            animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+            display: inline-block;
+        }
+
+        @keyframes typing { from { width: 0 } to { width: 100% } }
+        @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: orange; } }
+
+        /* Smooth Anchor Scrolling */
+        html { scroll-behavior: smooth; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900 dark:bg-darker dark:text-gray-300 antialiased selection:bg-primary selection:text-white transition-colors duration-300">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-white/80 dark:bg-darker/80 backdrop-blur-md border-b border-gray-200 dark:border-white/10 transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <a href="#" class="text-xl font-bold text-gray-900 dark:text-white tracking-tight">
+                        Fakhri<span class="text-primary">.</span>
+                    </a>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#about" class="hover:text-primary transition-colors px-3 py-2 rounded-md text-sm font-medium">About</a>
+                        <a href="#interests" class="hover:text-primary transition-colors px-3 py-2 rounded-md text-sm font-medium">Interests</a>
+                        <a href="#projects" class="hover:text-primary transition-colors px-3 py-2 rounded-md text-sm font-medium">Projects</a>
+                        <a href="#contact" class="hover:text-primary transition-colors px-3 py-2 rounded-md text-sm font-medium">Contact</a>
+                        
+                        <!-- Theme Toggle Button -->
+                        <!-- Theme Toggle Switch -->
+                        <button onclick="toggleTheme()" class="relative inline-flex h-6 w-11 items-center rounded-full bg-gray-200 dark:bg-gray-700 transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:focus:ring-offset-darker">
+                            <span class="sr-only">Toggle theme</span>
+                            <span class="translate-x-1 dark:translate-x-6 inline-block h-4 w-4 transform rounded-full bg-white shadow-lg transition-transform duration-200 ease-in-out flex items-center justify-center">
+                                <!-- Tiny Icon inside the toggle -->
+                                <svg class="w-3 h-3 text-yellow-500 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 24.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                                <svg class="w-3 h-3 text-yellow-500 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+                 <!-- Mobile toggle & menu button -->
+                 <div class="-mr-2 flex md:hidden items-center gap-4">
+                    <button onclick="toggleTheme()" class="relative inline-flex h-6 w-11 items-center rounded-full bg-gray-200 dark:bg-gray-700 transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:focus:ring-offset-darker">
+                        <span class="sr-only">Toggle theme</span>
+                        <span class="translate-x-1 dark:translate-x-6 inline-block h-4 w-4 transform rounded-full bg-white shadow-lg transition-transform duration-200 ease-in-out flex items-center justify-center">
+                            <!-- Tiny Icon inside the toggle -->
+                             <svg class="w-3 h-3 text-yellow-500 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 24.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                             <svg class="w-3 h-3 text-yellow-500 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                        </span>
+                    </button>
+                    <button type="button" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" class="inline-flex items-center justify-center p-2 rounded-md text-gray-700 dark:text-gray-400 hover:text-darker dark:hover:text-white hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none" aria-controls="mobile-menu" aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile menu, show/hide based on menu state. -->
+        <div class="hidden md:hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white dark:bg-dark border-b border-gray-200 dark:border-white/10">
+                <a href="#about" class="text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-white block px-3 py-2 rounded-md text-base font-medium">About</a>
+                <a href="#interests" class="text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-white block px-3 py-2 rounded-md text-base font-medium">Interests</a>
+                <a href="#projects" class="text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-white block px-3 py-2 rounded-md text-base font-medium">Projects</a>
+                <a href="#contact" class="text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-white block px-3 py-2 rounded-md text-base font-medium">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <section id="about" class="min-h-screen flex items-center pt-32 pb-32 md:py-0 relative overflow-hidden">
+        <!-- Background Glow -->
+        <div class="absolute top-1/4 right-0 w-96 h-96 bg-primary/20 dark:bg-primary/30 rounded-full blur-3xl -z-10 animate-blob mix-blend-multiply dark:mix-blend-color-dodge"></div>
+        <div class="absolute bottom-1/4 left-0 w-96 h-96 bg-purple-500/20 dark:bg-purple-500/30 rounded-full blur-3xl -z-10 animate-blob animation-delay-2000 mix-blend-multiply dark:mix-blend-color-dodge"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-pink-500/20 dark:bg-pink-500/30 rounded-full blur-3xl -z-10 animate-blob animation-delay-4000 mix-blend-multiply dark:mix-blend-color-dodge"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-10">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-12">
+                <!-- Text Content (Left) -->
+                <div class="flex-1 text-left order-2 md:order-1">
+                    <h2 class="text-primary font-bold tracking-widest uppercase mb-4 text-sm md:text-base relative inline-block after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-1/2 after:h-0.5 after:bg-primary" data-aos="fade-down" data-aos-duration="800">Hello, I'm</h2>
+                    
+                    <div class="mb-6 relative">
+                        <h1 class="text-5xl md:text-7xl font-bold text-gray-900 dark:text-white mb-2 tracking-tight leading-tight" data-aos="fade-right" data-aos-delay="200">
+                            Fakhri<span class="text-primary animate-pulse">.</span>
+                        </h1>
+                        <div class="h-8 md:h-10 overflow-hidden" data-aos="fade-right" data-aos-delay="400">
+                             <p class="text-xl md:text-3xl text-gray-600 dark:text-gray-300 font-light items-center">
+                                <span class="typing-effect border-r-2 border-primary pr-2">Portofolio</span>
+                             </p>
+                        </div>
+                    </div>
+
+                    <p class="text-gray-600 dark:text-gray-400 mb-10 text-lg leading-relaxed max-w-2xl border-l-4 border-gray-200 dark:border-gray-700 pl-6" data-aos="fade-up" data-aos-delay="600">
+                        Mahasiswa Teknik Informatika dari Universitas Komputer Indonesia. Saya senang memecahkan masalah yang kompleks dan mempelajari teknologi baru.                    </p>
+                    
+                    <div class="flex flex-wrap gap-4" data-aos="fade-up" data-aos-delay="800">
+                        <a href="#contact" class="group relative px-8 py-3 rounded-full bg-primary text-white font-medium shadow-lg shadow-blue-500/30 overflow-hidden transition-all hover:scale-105 hover:shadow-blue-500/50">
+                            <span class="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-[shimmer_1s_infinite]"></span>
+                            <span class="relative flex items-center gap-2">
+                                Get in Touch
+                                <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                            </span>
+                        </a>
+                        <a href="#projects" class="px-8 py-3 rounded-full bg-white/50 dark:bg-white/5 text-gray-900 dark:text-white font-medium backdrop-blur-sm border border-gray-200 dark:border-white/10 transition-all hover:bg-white dark:hover:bg-white/10 hover:border-primary/50 dark:hover:border-white/30 hover:scale-105">
+                            View Work
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Image Content (Right) -->
+                <div class="flex-1 flex justify-center md:justify-end order-1 md:order-2 relative" data-aos="fade-left" data-aos-duration="1000">
+                     <div class="relative w-72 h-72 md:w-[28rem] md:h-[28rem] group animate-float">
+                        <!-- Decorative shapes -->
+                        <div class="absolute -inset-4 bg-gradient-to-r from-primary via-purple-500 to-pink-500 rounded-[2.5rem] rotate-6 opacity-30 group-hover:opacity-60 transition duration-700 blur-xl animate-gradient-x"></div>
+                        
+                        <!-- Image Container -->
+                        <div class="relative w-full h-full rounded-[2.5rem] overflow-hidden border-4 border-white dark:border-gray-800 shadow-2xl">
+                            <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 group-hover:rotate-1" 
+                                 src="assets/profile.jpeg" 
+                                 alt="Profile Photo">
+                            
+                            <!-- Overlay Text -->
+                             <div class="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-4 group-hover:translate-y-0">
+                                <p class="text-white font-semibold text-center">Let's build something amazing!</p>
+                             </div>
+                        </div>
+
+                        <!-- Floating Badge -->
+                        <div class="absolute -bottom-6 -left-6 bg-white dark:bg-card p-4 rounded-2xl shadow-xl flex items-center gap-3 animate-float-delayed border border-gray-100 dark:border-white/5">
+                            <div class="bg-green-100 dark:bg-green-900/30 p-2 rounded-full">
+                                <svg class="w-6 h-6 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-500 dark:text-gray-400 font-medium">Status</p>
+                                <p class="text-sm font-bold text-gray-900 dark:text-white">Open to Work</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Scroll indicator -->
+        <div class="hidden md:block absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce cursor-pointer p-2 z-20" onclick="document.getElementById('about').nextElementSibling.scrollIntoView({behavior: 'smooth'})">
+            <svg class="w-6 h-6 text-gray-400 dark:text-gray-500 hover:text-primary transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            </svg>
+        </div>
+
+    </section>
+
+    <!-- Work Experience Section -->
+    <section id="experience" class="py-24 bg-gray-50 dark:bg-darker relative transition-colors duration-300 overflow-hidden">
+        <!-- Background Glows -->
+        <div class="absolute top-20 left-20 w-72 h-72 bg-indigo-500/30 rounded-full blur-3xl animate-blob mix-blend-multiply dark:mix-blend-color-dodge"></div>
+        <div class="absolute bottom-0 right-0 w-80 h-80 bg-primary/30 rounded-full blur-3xl animate-blob animation-delay-2000 mix-blend-multiply dark:mix-blend-color-dodge"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-blue-500/30 rounded-full blur-3xl animate-blob animation-delay-4000 mix-blend-multiply dark:mix-blend-color-dodge"></div>
+
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-16 text-center" data-aos="fade-up">Work Experience</h2>
+            
+            <div class="space-y-8">
+                                                            <div class="relative pl-8 md:pl-0" data-aos="fade-up" data-aos-delay="0">
+                            <div class="md:flex items-center justify-between group">
+                                <!-- Timeline Line (Desktop) -->
+                                <div class="hidden md:block absolute left-1/2 top-0 bottom-0 w-px bg-gray-200 dark:bg-gray-700 transform -translate-x-1/2"></div>
+                                
+                                <!-- Content Card -->
+                                <div class="w-full md:w-5/12 md:text-right">
+                                    <div class="bg-white dark:bg-card p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-white/5 hover:border-primary/30 transition-all duration-300 hover:-translate-y-1">
+                                        <h3 class="text-xl font-bold text-gray-900 dark:text-white text-primary">Divisi P3K</h3>
+                                        <h4 class="text-lg font-semibold text-gray-700 dark:text-gray-300 mb-2">Volunteer GAMATIF 2024</h4>
+                                        <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+                                            Bertanggung jawab atas kesehatan dan keselamatan peserta serta panitia selama acara berlangsung. Siap sedia menangani pertolongan pertama pada kecelakaan ringan dan memastikan kondisi fisik seluruh elemen acara tetap prima.                                        </p>
+                                    </div>
+                                </div>
+
+                                <!-- Timeline Dot -->
+                                <div class="absolute left-0 md:left-1/2 w-4 h-4 rounded-full bg-primary border-4 border-white dark:border-dark transform -translate-x-1/2 mt-6 md:mt-0 z-10"></div>
+
+                                <!-- Date (Opposite side) -->
+                                <div class="w-full md:w-5/12 mt-2 md:mt-0 md:text-left pl-8">
+                                    <span class="inline-block px-4 py-1 rounded-full bg-blue-100 dark:bg-blue-900/30 text-primary text-sm font-semibold">
+                                        2024                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                                            <div class="relative pl-8 md:pl-0" data-aos="fade-up" data-aos-delay="100">
+                            <div class="md:flex items-center justify-between group">
+                                <!-- Timeline Line (Desktop) -->
+                                <div class="hidden md:block absolute left-1/2 top-0 bottom-0 w-px bg-gray-200 dark:bg-gray-700 transform -translate-x-1/2"></div>
+                                
+                                <!-- Content Card -->
+                                <div class="w-full md:w-5/12 md:order-3 md:text-left">
+                                    <div class="bg-white dark:bg-card p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-white/5 hover:border-primary/30 transition-all duration-300 hover:-translate-y-1">
+                                        <h3 class="text-xl font-bold text-gray-900 dark:text-white text-primary">Divisi Design Graphic</h3>
+                                        <h4 class="text-lg font-semibold text-gray-700 dark:text-gray-300 mb-2">PT INTI OPTIMA TEKNOLOGI</h4>
+                                        <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+                                            Praktik Kerja Lapangan. Bertanggung jawab membuat desain grafis untuk kebutuhan perusahaan dan menciptakan karakter maskot 3D menggunakan software Blender.                                        </p>
+                                    </div>
+                                </div>
+
+                                <!-- Timeline Dot -->
+                                <div class="absolute left-0 md:left-1/2 w-4 h-4 rounded-full bg-primary border-4 border-white dark:border-dark transform -translate-x-1/2 mt-6 md:mt-0 z-10"></div>
+
+                                <!-- Date (Opposite side) -->
+                                <div class="w-full md:w-5/12 mt-2 md:mt-0 md:text-right pr-8">
+                                    <span class="inline-block px-4 py-1 rounded-full bg-blue-100 dark:bg-blue-900/30 text-primary text-sm font-semibold">
+                                        2022                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                                                </div>
+        </div>
+    </section>
+    <section id="interests" class="py-24 bg-white dark:bg-dark relative overflow-hidden transition-colors duration-300">
+        <!-- Background Elements -->
+        <div class="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-primary/5 to-transparent skew-x-12 pointer-events-none"></div>
+        <div class="absolute bottom-0 left-0 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <h2 class="text-4xl font-bold text-gray-900 dark:text-white mb-16 text-center" data-aos="fade-up">
+                My <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-purple-500">Passion</span>
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+                                <div class="group relative p-1 rounded-2xl bg-gradient-to-br from-gray-50 to-white dark:from-white/10 dark:to-white/5 hover:from-primary hover:to-purple-600 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/20 hover:-translate-y-2" 
+                     data-aos="flip-up" data-aos-delay="0">
+                    <div class="absolute inset-0 bg-white dark:bg-darker rounded-2xl m-[1px] group-hover:bg-opacity-95 dark:group-hover:bg-opacity-95 transition-all"></div>
+                    
+                    <div class="relative p-8 h-full flex flex-col justify-between z-10">
+                        <!-- Icon & Title -->
+                        <div class="flex items-start justify-between mb-6">
+                            <div class="p-3 bg-gray-50 dark:bg-white/5 rounded-lg group-hover:bg-primary/20 transition-colors duration-300">
+                                                                    <svg class="w-8 h-8 text-primary group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                                    </svg>
+                                                            </div>
+                            <span class="text-5xl font-bold text-gray-300 dark:text-white/5 absolute top-4 right-4 group-hover:text-indigo-50 dark:group-hover:text-white/10 transition-colors">01</span>
+                        </div>
+
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-primary group-hover:to-purple-200 transition-all duration-300">
+                                Data Scientist                            </h3>
+                            <p class="text-gray-600 dark:text-gray-400 leading-relaxed mb-6 group-hover:text-gray-900 dark:group-hover:text-gray-300 transition-colors">
+                                Mengungkap pola tersembunyi dalam kumpulan data yang kompleks untuk mendorong pengambilan keputusan yang cerdas. Bersemangat membangun model prediksi dan memanfaatkan machine learning untuk memecahkan masalah dunia nyata.                            </p>
+                        </div>
+
+                        <!-- Tags -->
+                        <div class="flex flex-wrap gap-2 mt-auto">
+                                                            <span class="text-xs font-medium px-3 py-1 rounded-full bg-gray-50 dark:bg-white/5 text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-white/5 group-hover:border-primary/20 dark:group-hover:border-white/20 group-hover:text-primary dark:group-hover:text-white transition-all">Machine Learning</span>
+                                                            <span class="text-xs font-medium px-3 py-1 rounded-full bg-gray-50 dark:bg-white/5 text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-white/5 group-hover:border-primary/20 dark:group-hover:border-white/20 group-hover:text-primary dark:group-hover:text-white transition-all">Python</span>
+                                                            <span class="text-xs font-medium px-3 py-1 rounded-full bg-gray-50 dark:bg-white/5 text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-white/5 group-hover:border-primary/20 dark:group-hover:border-white/20 group-hover:text-primary dark:group-hover:text-white transition-all">Predictive Modeling</span>
+                                                            <span class="text-xs font-medium px-3 py-1 rounded-full bg-gray-50 dark:bg-white/5 text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-white/5 group-hover:border-primary/20 dark:group-hover:border-white/20 group-hover:text-primary dark:group-hover:text-white transition-all">AI</span>
+                                                    </div>
+                    </div>
+                </div>
+                                <div class="group relative p-1 rounded-2xl bg-gradient-to-br from-gray-50 to-white dark:from-white/10 dark:to-white/5 hover:from-primary hover:to-purple-600 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/20 hover:-translate-y-2" 
+                     data-aos="flip-up" data-aos-delay="150">
+                    <div class="absolute inset-0 bg-white dark:bg-darker rounded-2xl m-[1px] group-hover:bg-opacity-95 dark:group-hover:bg-opacity-95 transition-all"></div>
+                    
+                    <div class="relative p-8 h-full flex flex-col justify-between z-10">
+                        <!-- Icon & Title -->
+                        <div class="flex items-start justify-between mb-6">
+                            <div class="p-3 bg-gray-50 dark:bg-white/5 rounded-lg group-hover:bg-primary/20 transition-colors duration-300">
+                                                                    <svg class="w-8 h-8 text-purple-500 group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M5 4h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V6a2 2 0 012-2z" />
+                                    </svg>
+                                                            </div>
+                            <span class="text-5xl font-bold text-gray-300 dark:text-white/5 absolute top-4 right-4 group-hover:text-indigo-50 dark:group-hover:text-white/10 transition-colors">02</span>
+                        </div>
+
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-primary group-hover:to-purple-200 transition-all duration-300">
+                                Data Analyst                            </h3>
+                            <p class="text-gray-600 dark:text-gray-400 leading-relaxed mb-6 group-hover:text-gray-900 dark:group-hover:text-gray-300 transition-colors">
+                                Mengubah data mentah menjadi wawasan yang dapat ditindaklanjuti melalui penceritaan dan visualisasi. Spesialis dalam membuat dasbor interaktif yang memberdayakan bisnis untuk memahami kinerja mereka secara sekilas.                            </p>
+                        </div>
+
+                        <!-- Tags -->
+                        <div class="flex flex-wrap gap-2 mt-auto">
+                                                            <span class="text-xs font-medium px-3 py-1 rounded-full bg-gray-50 dark:bg-white/5 text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-white/5 group-hover:border-primary/20 dark:group-hover:border-white/20 group-hover:text-primary dark:group-hover:text-white transition-all">Visualisasi Data</span>
+                                                            <span class="text-xs font-medium px-3 py-1 rounded-full bg-gray-50 dark:bg-white/5 text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-white/5 group-hover:border-primary/20 dark:group-hover:border-white/20 group-hover:text-primary dark:group-hover:text-white transition-all">SQL</span>
+                                                            <span class="text-xs font-medium px-3 py-1 rounded-full bg-gray-50 dark:bg-white/5 text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-white/5 group-hover:border-primary/20 dark:group-hover:border-white/20 group-hover:text-primary dark:group-hover:text-white transition-all">Business Intelligence</span>
+                                                            <span class="text-xs font-medium px-3 py-1 rounded-full bg-gray-50 dark:bg-white/5 text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-white/5 group-hover:border-primary/20 dark:group-hover:border-white/20 group-hover:text-primary dark:group-hover:text-white transition-all">Looker</span>
+                                                    </div>
+                    </div>
+                </div>
+                            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="py-24 bg-gray-50 dark:bg-darker border-t border-gray-200 dark:border-white/5 transition-colors duration-300">
+         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <!-- Technical Skills -->
+                <div>
+                    <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-12 text-center md:text-left">Technical Skills</h2>
+                    <div class="flex flex-wrap justify-center md:justify-start gap-8">
+                                                    <div class="flex flex-col items-center justify-center w-32 h-32 bg-white dark:bg-card rounded-2xl border border-gray-200 dark:border-white/5 hover:border-primary/50 hover:bg-gray-50 dark:hover:bg-white/5 transition-all duration-300 group hover:-translate-y-2 hover:shadow-lg hover:shadow-primary/10"
+                                 data-aos="zoom-in" data-aos-delay="0">
+                                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" alt="PHP" class="h-12 w-12 mb-3 grayscale group-hover:grayscale-0 transition-all duration-300 group-hover:scale-110">
+                                <span class="text-gray-600 dark:text-gray-400 font-medium text-sm group-hover:text-gray-900 dark:group-hover:text-white transition-colors">PHP</span>
+                            </div>
+                                                    <div class="flex flex-col items-center justify-center w-32 h-32 bg-white dark:bg-card rounded-2xl border border-gray-200 dark:border-white/5 hover:border-primary/50 hover:bg-gray-50 dark:hover:bg-white/5 transition-all duration-300 group hover:-translate-y-2 hover:shadow-lg hover:shadow-primary/10"
+                                 data-aos="zoom-in" data-aos-delay="50">
+                                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/laravel/laravel-original.svg" alt="Laravel" class="h-12 w-12 mb-3 grayscale group-hover:grayscale-0 transition-all duration-300 group-hover:scale-110">
+                                <span class="text-gray-600 dark:text-gray-400 font-medium text-sm group-hover:text-gray-900 dark:group-hover:text-white transition-colors">Laravel</span>
+                            </div>
+                                                    <div class="flex flex-col items-center justify-center w-32 h-32 bg-white dark:bg-card rounded-2xl border border-gray-200 dark:border-white/5 hover:border-primary/50 hover:bg-gray-50 dark:hover:bg-white/5 transition-all duration-300 group hover:-translate-y-2 hover:shadow-lg hover:shadow-primary/10"
+                                 data-aos="zoom-in" data-aos-delay="100">
+                                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="MySQL" class="h-12 w-12 mb-3 grayscale group-hover:grayscale-0 transition-all duration-300 group-hover:scale-110">
+                                <span class="text-gray-600 dark:text-gray-400 font-medium text-sm group-hover:text-gray-900 dark:group-hover:text-white transition-colors">MySQL</span>
+                            </div>
+                                                    <div class="flex flex-col items-center justify-center w-32 h-32 bg-white dark:bg-card rounded-2xl border border-gray-200 dark:border-white/5 hover:border-primary/50 hover:bg-gray-50 dark:hover:bg-white/5 transition-all duration-300 group hover:-translate-y-2 hover:shadow-lg hover:shadow-primary/10"
+                                 data-aos="zoom-in" data-aos-delay="150">
+                                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python" class="h-12 w-12 mb-3 grayscale group-hover:grayscale-0 transition-all duration-300 group-hover:scale-110">
+                                <span class="text-gray-600 dark:text-gray-400 font-medium text-sm group-hover:text-gray-900 dark:group-hover:text-white transition-colors">Python</span>
+                            </div>
+                                            </div>
+                </div>
+
+                <!-- Editing Skills -->
+                <div>
+                    <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-12 text-center md:text-left">Editing Skills</h2>
+                    <div class="flex flex-wrap justify-center md:justify-start gap-8">
+                                                    <div class="flex flex-col items-center justify-center w-32 h-32 bg-white dark:bg-card rounded-2xl border border-gray-200 dark:border-white/5 hover:border-primary/50 hover:bg-gray-50 dark:hover:bg-white/5 transition-all duration-300 group hover:-translate-y-2 hover:shadow-lg hover:shadow-primary/10"
+                                 data-aos="zoom-in" data-aos-delay="200"> <!-- Added offset delay -->
+                                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" alt="Figma" class="h-12 w-12 mb-3 grayscale group-hover:grayscale-0 transition-all duration-300 group-hover:scale-110">
+                                <span class="text-gray-600 dark:text-gray-400 font-medium text-sm text-center px-2 group-hover:text-gray-900 dark:group-hover:text-white transition-colors">Figma</span>
+                            </div>
+                                                    <div class="flex flex-col items-center justify-center w-32 h-32 bg-white dark:bg-card rounded-2xl border border-gray-200 dark:border-white/5 hover:border-primary/50 hover:bg-gray-50 dark:hover:bg-white/5 transition-all duration-300 group hover:-translate-y-2 hover:shadow-lg hover:shadow-primary/10"
+                                 data-aos="zoom-in" data-aos-delay="250"> <!-- Added offset delay -->
+                                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/photoshop/photoshop-original.svg" alt="Adobe Photoshop" class="h-12 w-12 mb-3 grayscale group-hover:grayscale-0 transition-all duration-300 group-hover:scale-110">
+                                <span class="text-gray-600 dark:text-gray-400 font-medium text-sm text-center px-2 group-hover:text-gray-900 dark:group-hover:text-white transition-colors">Adobe Photoshop</span>
+                            </div>
+                                                    <div class="flex flex-col items-center justify-center w-32 h-32 bg-white dark:bg-card rounded-2xl border border-gray-200 dark:border-white/5 hover:border-primary/50 hover:bg-gray-50 dark:hover:bg-white/5 transition-all duration-300 group hover:-translate-y-2 hover:shadow-lg hover:shadow-primary/10"
+                                 data-aos="zoom-in" data-aos-delay="300"> <!-- Added offset delay -->
+                                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/illustrator/illustrator-plain.svg" alt="Adobe Illustrator" class="h-12 w-12 mb-3 grayscale group-hover:grayscale-0 transition-all duration-300 group-hover:scale-110">
+                                <span class="text-gray-600 dark:text-gray-400 font-medium text-sm text-center px-2 group-hover:text-gray-900 dark:group-hover:text-white transition-colors">Adobe Illustrator</span>
+                            </div>
+                                                    <div class="flex flex-col items-center justify-center w-32 h-32 bg-white dark:bg-card rounded-2xl border border-gray-200 dark:border-white/5 hover:border-primary/50 hover:bg-gray-50 dark:hover:bg-white/5 transition-all duration-300 group hover:-translate-y-2 hover:shadow-lg hover:shadow-primary/10"
+                                 data-aos="zoom-in" data-aos-delay="350"> <!-- Added offset delay -->
+                                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/premierepro/premierepro-original.svg" alt="Adobe Premiere Pro" class="h-12 w-12 mb-3 grayscale group-hover:grayscale-0 transition-all duration-300 group-hover:scale-110">
+                                <span class="text-gray-600 dark:text-gray-400 font-medium text-sm text-center px-2 group-hover:text-gray-900 dark:group-hover:text-white transition-colors">Adobe Premiere Pro</span>
+                            </div>
+                                                    <div class="flex flex-col items-center justify-center w-32 h-32 bg-white dark:bg-card rounded-2xl border border-gray-200 dark:border-white/5 hover:border-primary/50 hover:bg-gray-50 dark:hover:bg-white/5 transition-all duration-300 group hover:-translate-y-2 hover:shadow-lg hover:shadow-primary/10"
+                                 data-aos="zoom-in" data-aos-delay="400"> <!-- Added offset delay -->
+                                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/canva/canva-original.svg" alt="Canva" class="h-12 w-12 mb-3 grayscale group-hover:grayscale-0 transition-all duration-300 group-hover:scale-110">
+                                <span class="text-gray-600 dark:text-gray-400 font-medium text-sm text-center px-2 group-hover:text-gray-900 dark:group-hover:text-white transition-colors">Canva</span>
+                            </div>
+                                                    <div class="flex flex-col items-center justify-center w-32 h-32 bg-white dark:bg-card rounded-2xl border border-gray-200 dark:border-white/5 hover:border-primary/50 hover:bg-gray-50 dark:hover:bg-white/5 transition-all duration-300 group hover:-translate-y-2 hover:shadow-lg hover:shadow-primary/10"
+                                 data-aos="zoom-in" data-aos-delay="450"> <!-- Added offset delay -->
+                                <img src="https://cdn.brandfetch.io/idUmqKFgE3/w/400/h/400/theme/dark/icon.jpeg?c=1dxbfHSJFAPEGdCLU4o5B" alt="CapCut" class="h-12 w-12 mb-3 grayscale group-hover:grayscale-0 transition-all duration-300 group-hover:scale-110">
+                                <span class="text-gray-600 dark:text-gray-400 font-medium text-sm text-center px-2 group-hover:text-gray-900 dark:group-hover:text-white transition-colors">CapCut</span>
+                            </div>
+                                            </div>
+                </div>
+            </div>
+         </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-24 bg-gray-50 dark:bg-dark transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-16 flex items-center">
+                <span class="ml-4 h-px bg-gray-200 dark:bg-white/10 flex-grow mr-4"></span>
+                <span class="bg-clip-text text-transparent bg-gradient-to-r from-primary to-purple-500">Featured Projects</span>
+                <span class="ml-4 h-px bg-gray-200 dark:bg-white/10 flex-grow"></span>
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                <div onclick="openProjectModal(0)" 
+                     class="cursor-pointer bg-white dark:bg-card rounded-2xl overflow-hidden border border-gray-100 dark:border-white/5 hover:border-gray-200 dark:hover:border-white/10 transition-all duration-500 group hover:-translate-y-2 shadow-sm dark:shadow-none hover:shadow-xl hover:shadow-primary/5"
+                     data-aos="fade-up" data-aos-delay="0">
+                    <!-- Preview Image -->
+                    <div class="h-48 bg-gray-100 dark:bg-gray-800 relative overflow-hidden group">
+                                                    <img src="assets/RP 0.jpg" alt="Sistem Informasi Restoran" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 group-hover:rotate-1">
+                                                
+                        <!-- Overlay Gradient & Title (Always Visible) -->
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 transition-opacity duration-300"></div>
+                        <div class="absolute bottom-4 left-4 right-4 translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+                             <h3 class="text-xl font-bold text-white leading-tight drop-shadow-md">Sistem Informasi Restoran</h3>
+                        </div>
+                    </div>
+                    
+                    <div class="p-6">
+                        <p class="text-gray-600 dark:text-gray-400 text-sm mb-6 leading-relaxed line-clamp-3">
+                            Sistem manajemen restoran multi-role (Admin, Kasir, Koki, Pelayan) dengan fitur pemesanan digital, reservasi meja, integrasi pembayaran Midtrans, manajemen stok menu, verifikasi pesanan dapur, dan dashboard keuangan.                        </p>
+                        
+                        <div class="flex flex-wrap gap-2 mb-6">
+                                                            <span class="text-xs font-medium text-primary bg-primary/10 px-2 py-1 rounded transition-colors group-hover:bg-primary group-hover:text-white">
+                                    Laravel                                </span>
+                                                            <span class="text-xs font-medium text-primary bg-primary/10 px-2 py-1 rounded transition-colors group-hover:bg-primary group-hover:text-white">
+                                    MySQL                                </span>
+                                                            <span class="text-xs font-medium text-primary bg-primary/10 px-2 py-1 rounded transition-colors group-hover:bg-primary group-hover:text-white">
+                                    Midtrans API                                </span>
+                                                    </div>
+
+                        <div class="inline-flex items-center text-sm font-medium text-gray-900 dark:text-white group-hover:text-primary transition-colors">
+                            Lihat Detail 
+                            <svg class="ml-1 w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                        </div>
+                    </div>
+                </div>
+                                <div onclick="openProjectModal(1)" 
+                     class="cursor-pointer bg-white dark:bg-card rounded-2xl overflow-hidden border border-gray-100 dark:border-white/5 hover:border-gray-200 dark:hover:border-white/10 transition-all duration-500 group hover:-translate-y-2 shadow-sm dark:shadow-none hover:shadow-xl hover:shadow-primary/5"
+                     data-aos="fade-up" data-aos-delay="200">
+                    <!-- Preview Image -->
+                    <div class="h-48 bg-gray-100 dark:bg-gray-800 relative overflow-hidden group">
+                                                    <img src="assets/DY 1.jpg" alt="Aplikasi DonasiYuk" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 group-hover:rotate-1">
+                                                
+                        <!-- Overlay Gradient & Title (Always Visible) -->
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 transition-opacity duration-300"></div>
+                        <div class="absolute bottom-4 left-4 right-4 translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+                             <h3 class="text-xl font-bold text-white leading-tight drop-shadow-md">Aplikasi DonasiYuk</h3>
+                        </div>
+                    </div>
+                    
+                    <div class="p-6">
+                        <p class="text-gray-600 dark:text-gray-400 text-sm mb-6 leading-relaxed line-clamp-3">
+                            Aplikasi donasi berbasis publik yang menghubungkan pendonasi dengan penerima manfaat secara cepat. Dilengkapi fitur live chat real-time menggunakan Laravel Livewire untuk komunikasi langsung.                        </p>
+                        
+                        <div class="flex flex-wrap gap-2 mb-6">
+                                                            <span class="text-xs font-medium text-primary bg-primary/10 px-2 py-1 rounded transition-colors group-hover:bg-primary group-hover:text-white">
+                                    Laravel                                </span>
+                                                            <span class="text-xs font-medium text-primary bg-primary/10 px-2 py-1 rounded transition-colors group-hover:bg-primary group-hover:text-white">
+                                    Livewire                                </span>
+                                                            <span class="text-xs font-medium text-primary bg-primary/10 px-2 py-1 rounded transition-colors group-hover:bg-primary group-hover:text-white">
+                                    Tailwind CSS                                </span>
+                                                    </div>
+
+                        <div class="inline-flex items-center text-sm font-medium text-gray-900 dark:text-white group-hover:text-primary transition-colors">
+                            Lihat Detail 
+                            <svg class="ml-1 w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                        </div>
+                    </div>
+                </div>
+                                <div onclick="openProjectModal(2)" 
+                     class="cursor-pointer bg-white dark:bg-card rounded-2xl overflow-hidden border border-gray-100 dark:border-white/5 hover:border-gray-200 dark:hover:border-white/10 transition-all duration-500 group hover:-translate-y-2 shadow-sm dark:shadow-none hover:shadow-xl hover:shadow-primary/5"
+                     data-aos="fade-up" data-aos-delay="400">
+                    <!-- Preview Image -->
+                    <div class="h-48 bg-gray-100 dark:bg-gray-800 relative overflow-hidden group">
+                                                    <img src="assets/D1.jpg" alt="Analisis Strategis Startup (SE-Asia)" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 group-hover:rotate-1">
+                                                
+                        <!-- Overlay Gradient & Title (Always Visible) -->
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 transition-opacity duration-300"></div>
+                        <div class="absolute bottom-4 left-4 right-4 translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+                             <h3 class="text-xl font-bold text-white leading-tight drop-shadow-md">Analisis Strategis Startup (SE-Asia)</h3>
+                        </div>
+                    </div>
+                    
+                    <div class="p-6">
+                        <p class="text-gray-600 dark:text-gray-400 text-sm mb-6 leading-relaxed line-clamp-3">
+                            Dashboard visualisasi data yang menganalisis ekosistem startup di Asia Tenggara (2009-2013). Menampilkan tren investasi, dominasi pasar E-Commerce di Indonesia, peluang B2B Software, serta perbandingan distribusi pendanaan regional.                        </p>
+                        
+                        <div class="flex flex-wrap gap-2 mb-6">
+                                                            <span class="text-xs font-medium text-primary bg-primary/10 px-2 py-1 rounded transition-colors group-hover:bg-primary group-hover:text-white">
+                                    Looker Studio                                </span>
+                                                            <span class="text-xs font-medium text-primary bg-primary/10 px-2 py-1 rounded transition-colors group-hover:bg-primary group-hover:text-white">
+                                    Python                                </span>
+                                                            <span class="text-xs font-medium text-primary bg-primary/10 px-2 py-1 rounded transition-colors group-hover:bg-primary group-hover:text-white">
+                                    Data Analytics                                </span>
+                                                    </div>
+
+                        <div class="inline-flex items-center text-sm font-medium text-gray-900 dark:text-white group-hover:text-primary transition-colors">
+                            Lihat Detail 
+                            <svg class="ml-1 w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                        </div>
+                    </div>
+                </div>
+                            </div>
+        </div>
+    </section>
+
+    <!-- Project Modal -->
+    <div id="projectModal" class="fixed inset-0 z-[60] hidden overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <!-- Backdrop -->
+        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 bg-gray-900/75 backdrop-blur-sm transition-opacity" aria-hidden="true" onclick="closeProjectModal()"></div>
+
+            <!-- Modal Panel -->
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+            <div class="inline-block align-bottom bg-white dark:bg-card rounded-2xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-4xl sm:w-full border border-gray-200 dark:border-white/10 relative">
+                
+                <!-- Close Button -->
+                <button onclick="closeProjectModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300 focus:outline-none z-10 p-2 bg-white/50 dark:bg-black/50 rounded-full backdrop-blur-sm">
+                    <span class="sr-only">Close</span>
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+
+                <div class="flex flex-col md:flex-row h-full max-h-[85vh]">
+                    <!-- Image Gallery Side (Left) -->
+                    <div class="w-full md:w-1/2 bg-gray-100 dark:bg-darker relative h-64 md:h-auto group flex items-center justify-center overflow-hidden">
+                        <img id="modalImage" src="" alt="Project Screenshot" class="w-full h-full object-cover transition-opacity duration-300">
+                        
+                        <!-- Carousel Controls -->
+                        <button id="prevBtn" onclick="changeSlide(-1)" class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white/80 dark:bg-black/50 p-2 rounded-full hover:bg-white dark:hover:bg-black/70 transition-all opacity-0 group-hover:opacity-100 focus:opacity-100">
+                            <svg class="w-6 h-6 text-gray-800 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                        </button>
+                        <button id="nextBtn" onclick="changeSlide(1)" class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white/80 dark:bg-black/50 p-2 rounded-full hover:bg-white dark:hover:bg-black/70 transition-all opacity-0 group-hover:opacity-100 focus:opacity-100">
+                            <svg class="w-6 h-6 text-gray-800 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                        </button>
+
+                        <!-- Dots Navigation -->
+                        <div id="modalGalleryNav" class="absolute bottom-4 left-0 right-0 flex justify-center space-x-2">
+                            <!-- Dots injected via JS -->
+                        </div>
+                    </div>
+
+                    <!-- Content Side (Right) -->
+                    <div class="w-full md:w-1/2 p-8 md:p-10 flex flex-col overflow-y-auto">
+                        <h3 id="modalTitle" class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Project Title</h3>
+                        <div id="modalTags" class="flex flex-wrap gap-2 mb-6">
+                            <!-- Tags injected via JS -->
+                        </div>
+                        
+                        <div class="prose dark:prose-invert max-w-none mb-8 flex-grow">
+                            <p id="modalDescription" class="text-gray-600 dark:text-gray-400 leading-relaxed text-base">
+                                Project description goes here...
+                            </p>
+                        </div>
+
+                        <div class="mt-auto pt-6 border-t border-gray-100 dark:border-white/5">
+                            <a id="modalLink" href="#" target="_blank" class="w-full inline-flex justify-center items-center px-6 py-3 border border-transparent text-base font-medium rounded-xl shadow-sm text-white bg-primary hover:bg-blue-600 transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                                Kunjungi Website
+                                <svg class="ml-2 -mr-1 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pass PHP data to JS -->
+    <script>
+        const projectsData = [{"title":"Sistem Informasi Restoran","description":"Sistem manajemen restoran multi-role (Admin, Kasir, Koki, Pelayan) dengan fitur pemesanan digital, reservasi meja, integrasi pembayaran Midtrans, manajemen stok menu, verifikasi pesanan dapur, dan dashboard keuangan.","tech_stack":["Laravel","MySQL","Midtrans API"],"link":"https:\/\/restoranproif7.my.id","preview_image":"assets\/RP 0.jpg","screenshots":["assets\/RP 1.jpg","assets\/RP 2.jpg","assets\/RP 3.jpg","assets\/RP 4.jpg","assets\/RP 5.jpg"]},{"title":"Aplikasi DonasiYuk","description":"Aplikasi donasi berbasis publik yang menghubungkan pendonasi dengan penerima manfaat secara cepat. Dilengkapi fitur live chat real-time menggunakan Laravel Livewire untuk komunikasi langsung.","tech_stack":["Laravel","Livewire","Tailwind CSS"],"link":"https:\/\/fakhriproject.my.id","preview_image":"assets\/DY 1.jpg","screenshots":["assets\/DY 2.jpg","assets\/DY 3.jpg","assets\/DY 4.jpg","assets\/DY 5.jpg"]},{"title":"Analisis Strategis Startup (SE-Asia)","description":"Dashboard visualisasi data yang menganalisis ekosistem startup di Asia Tenggara (2009-2013). Menampilkan tren investasi, dominasi pasar E-Commerce di Indonesia, peluang B2B Software, serta perbandingan distribusi pendanaan regional.","tech_stack":["Looker Studio","Python","Data Analytics"],"link":"https:\/\/lookerstudio.google.com\/s\/l5Rtf3uRI1s","preview_image":"assets\/D1.jpg","screenshots":["assets\/D1.jpg"]}];
+    </script>
+    <script src="script.js"></script>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 bg-gray-50 dark:bg-darker relative transition-colors duration-300">
+        <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 dark:opacity-10 mix-blend-soft-light"></div>
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <h2 class="text-4xl font-bold text-gray-900 dark:text-white mb-6">Let's Work Together</h2>
+            <p class="text-xl text-gray-600 dark:text-gray-400 mb-10">
+                Saat ini saya tersedia untuk pekerjaan freelance dan terbuka untuk peluang baru.
+                Jika Anda memiliki proyek yang membutuhkan sentuhan kreatif, beri tahu saya.
+            </p>
+            
+            <a href="mailto:muhamadfakhri06@gmail.com" class="inline-block bg-primary hover:bg-blue-600 text-white px-8 py-4 rounded-full font-bold shadow-lg shadow-blue-500/30 transition-all mb-12 transform hover:-translate-y-1">
+                Say Hello
+            </a>
+
+            <div class="flex justify-center space-x-8">
+                                    <a href="https://www.linkedin.com/in/muhamad-fakhri-399193292/" class="text-gray-600 dark:text-gray-500 hover:text-primary dark:hover:text-white transition-colors" target="_blank">
+                        <span class="sr-only">Linkedin</span>
+                        <!-- Simple Icon Placeholder based on name -->
+                                                    <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" clip-rule="evenodd"/></svg>
+                                            </a>
+                                    <a href="https://www.instagram.com/sobatfakhri/?hl=en" class="text-gray-600 dark:text-gray-500 hover:text-primary dark:hover:text-white transition-colors" target="_blank">
+                        <span class="sr-only">Instagram</span>
+                        <!-- Simple Icon Placeholder based on name -->
+                                                    <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M7.8,2H16.2C19.4,2 22,4.6 22,7.8V16.2A5.8,5.8 0 0,1 16.2,22H7.8C4.6,22 2,19.4 2,16.2V7.8A5.8,5.8 0 0,1 7.8,2M7.6,4A3.6,3.6 0 0,0 4,7.6V16.4C4,18.39 5.61,20 7.6,20H16.4A3.6,3.6 0 0,0 20,16.4V7.6C20,5.61 18.39,4 16.4,4H7.6M17.25,5.5A1.25,1.25 0 0,1 18.5,6.75A1.25,1.25 0 0,1 17.25,8A1.25,1.25 0 0,1 16,6.75A1.25,1.25 0 0,1 17.25,5.5M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9Z" /></svg>
+                                            </a>
+                            </div>
+            
+             <footer class="mt-20 text-sm text-gray-500 dark:text-gray-600">
+                <p>&copy; 2026 Fakhri. All rights reserved.</p>
+            </footer>
+        </div>
+    </section>
+
+    <script>
+        AOS.init({
+            once: true,
+            offset: 50,
+            duration: 800,
+            easing: 'ease-out-cubic',
+        });
+    </script>
+</body>
+</html>
