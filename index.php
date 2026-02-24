@@ -11,7 +11,7 @@ $data = require 'data.php';
     <meta name="keywords" content="<?= $data['profile']['name'] ?>, Portfolio, PHP, Tailwind CSS, Web Developer, Freelance">
     <meta name="author" content="<?= $data['profile']['name'] ?>">
     <!-- Google Site Verification Placeholder -->
-    <!-- <meta name="google-site-verification" content="YOUR_VERIFICATION_CODE_HERE" /> -->
+    <meta name="google-site-verification" content="h3iSBQ1Ajgq7hU09gvD5ASXdI09d-XhUN4dwmfMRl_I" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
