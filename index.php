@@ -7,6 +7,11 @@ $data = require 'data.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $data['profile']['name'] ?> - <?= $data['profile']['title'] ?></title>
+    <meta name="description" content="<?= htmlspecialchars($data['profile']['summary']) ?>">
+    <meta name="keywords" content="<?= $data['profile']['name'] ?>, Portfolio, PHP, Tailwind CSS, Web Developer, Freelance">
+    <meta name="author" content="<?= $data['profile']['name'] ?>">
+    <!-- Google Site Verification Placeholder -->
+    <!-- <meta name="google-site-verification" content="YOUR_VERIFICATION_CODE_HERE" /> -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -76,16 +81,16 @@ $data = require 'data.php';
         /* Typing Effect */
         .typing-effect {
             overflow: hidden;
-            border-right: .15em solid orange;
+            border-right: .15em solid #3b82f6; /* primary color */
             white-space: nowrap;
             margin: 0;
             letter-spacing: .05em; 
-            animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+            animation: typing 2s steps(10, end) forwards, blink-caret .75s step-end infinite;
             display: inline-block;
         }
 
-        @keyframes typing { from { width: 0 } to { width: 100% } }
-        @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: orange; } }
+        @keyframes typing { from { width: 0 } to { width: 9.3ch } }
+        @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: #3b82f6; } }
 
         /* Smooth Anchor Scrolling */
         html { scroll-behavior: smooth; }
@@ -195,7 +200,7 @@ $data = require 'data.php';
                 <div class="flex-1 flex justify-center md:justify-end order-1 md:order-2 relative" data-aos="fade-left" data-aos-duration="1000">
                      <div class="relative w-72 h-72 md:w-[28rem] md:h-[28rem] group animate-float">
                         <!-- Decorative shapes -->
-                        <div class="absolute -inset-4 bg-gradient-to-r from-primary via-purple-500 to-pink-500 rounded-[2.5rem] rotate-6 opacity-30 group-hover:opacity-60 transition duration-700 blur-xl animate-gradient-x"></div>
+                        <div class="absolute -inset-4 bg-gradient-to-r from-blue-600 via-indigo-500 to-teal-400 rounded-[2.5rem] rotate-6 opacity-30 group-hover:opacity-60 transition duration-700 blur-xl animate-gradient-x"></div>
                         
                         <!-- Image Container -->
                         <div class="relative w-full h-full rounded-[2.5rem] overflow-hidden border-4 border-white dark:border-gray-800 shadow-2xl">
@@ -290,7 +295,7 @@ $data = require 'data.php';
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <h2 class="text-4xl font-bold text-gray-900 dark:text-white mb-16 text-center" data-aos="fade-up">
-                My <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-purple-500">Passion</span>
+                My <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-teal-500">Passion</span>
             </h2>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
@@ -378,7 +383,7 @@ $data = require 'data.php';
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-16 flex items-center">
                 <span class="ml-4 h-px bg-gray-200 dark:bg-white/10 flex-grow mr-4"></span>
-                <span class="bg-clip-text text-transparent bg-gradient-to-r from-primary to-purple-500">Featured Projects</span>
+                <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-teal-500">Featured Projects</span>
                 <span class="ml-4 h-px bg-gray-200 dark:bg-white/10 flex-grow"></span>
             </h2>
 
