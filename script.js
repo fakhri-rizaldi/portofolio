@@ -12,6 +12,77 @@ function toggleTheme() {
 
 window.toggleTheme = toggleTheme;
 
+// Language Switcher Logic
+let currentLang = localStorage.lang || 'id';
+
+function switchLanguage(lang) {
+    if (!portfolioData || !portfolioData[lang]) return;
+    currentLang = lang;
+    localStorage.lang = lang;
+
+    const d = portfolioData[lang];
+
+    // Update active button state
+    const btnId = document.getElementById('lang-btn-id');
+    const btnEn = document.getElementById('lang-btn-en');
+    if (btnId && btnEn) {
+        if (lang === 'id') {
+            btnId.className = 'px-2 py-0.5 text-xs font-mono rounded transition-colors font-bold';
+            btnId.style.background = 'var(--signal-amber)';
+            btnId.style.color = 'var(--bg-base)';
+            btnEn.className = 'px-2 py-0.5 text-xs font-mono rounded transition-colors';
+            btnEn.style.background = 'transparent';
+            btnEn.style.color = 'var(--ink-secondary)';
+        } else {
+            btnEn.className = 'px-2 py-0.5 text-xs font-mono rounded transition-colors font-bold';
+            btnEn.style.background = 'var(--signal-amber)';
+            btnEn.style.color = 'var(--bg-base)';
+            btnId.className = 'px-2 py-0.5 text-xs font-mono rounded transition-colors';
+            btnId.style.background = 'transparent';
+            btnId.style.color = 'var(--ink-secondary)';
+        }
+    }
+
+    // Hero Text
+    const statusEl = document.getElementById('heroStatus');
+    const nameEl = document.getElementById('heroName');
+    const titleEl = document.getElementById('heroTitle');
+    const summaryEl = document.getElementById('heroSummary');
+    const greetingEl = document.querySelector('[data-i18n="hero.greeting"]');
+
+    if (statusEl) statusEl.innerText = d.profile.status;
+    if (nameEl) nameEl.innerText = d.profile.name;
+    if (titleEl) titleEl.innerText = d.profile.title;
+    if (summaryEl) summaryEl.innerText = d.profile.summary;
+    if (greetingEl) greetingEl.innerText = lang === 'en' ? 'Hello, I am' : 'Halo, saya';
+
+    // CV Download Button & Link
+    const cvBtn = document.getElementById('cvDownloadBtn');
+    const cvBtnText = document.getElementById('cvBtnText');
+    if (cvBtn) {
+        cvBtn.href = d.profile.cv_file;
+        cvBtn.setAttribute('download', d.profile.cv_file);
+    }
+    if (cvBtnText) cvBtnText.innerText = d.profile.cv_label;
+
+    // Action Buttons
+    const sayHelloText = document.getElementById('sayHelloText');
+    const viewProjectsBtn = document.getElementById('viewProjectsBtn');
+    if (sayHelloText) sayHelloText.innerText = d.labels.say_hello;
+    if (viewProjectsBtn) viewProjectsBtn.innerText = d.labels.view_projects;
+
+    // Navigation Labels
+    document.querySelectorAll('[data-i18n^="nav."]').forEach(el => {
+        const key = el.getAttribute('data-i18n').replace('nav.', '');
+        if (d.labels[key]) el.innerText = d.labels[key];
+    });
+
+    // Update global projectsData for modal
+    window.projectsData = d.projects;
+}
+
+window.switchLanguage = switchLanguage;
+
 // Project Modal Logic
 let currentProject = null;
 let currentSlideIndex = 0;
@@ -186,5 +257,10 @@ document.addEventListener('DOMContentLoaded', function () {
             duration: 800,
             easing: 'ease-out-cubic',
         });
+    }
+
+    // Initialize Language
+    if (typeof switchLanguage === 'function') {
+        switchLanguage(currentLang);
     }
 });

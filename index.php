@@ -1,15 +1,17 @@
 <?php
 $data = require 'data.php';
+$lang = isset($_GET['lang']) && in_array($_GET['lang'], ['id', 'en']) ? $_GET['lang'] : 'id';
+$current = $data[$lang];
 ?>
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="<?= $lang ?>" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= $data['profile']['name'] ?> - <?= $data['profile']['title'] ?></title>
-    <meta name="description" content="<?= htmlspecialchars($data['profile']['summary']) ?>">
-    <meta name="keywords" content="<?= $data['profile']['name'] ?>, Portfolio, PHP, Tailwind CSS, Web Developer, Freelance">
-    <meta name="author" content="<?= $data['profile']['name'] ?>">
+    <title><?= $current['profile']['name'] ?> - <?= $current['profile']['title'] ?></title>
+    <meta name="description" content="<?= htmlspecialchars($current['profile']['summary']) ?>">
+    <meta name="keywords" content="<?= $current['profile']['name'] ?>, Portfolio, PHP, Tailwind CSS, Web Developer, Freelance">
+    <meta name="author" content="<?= $current['profile']['name'] ?>">
     <!-- Google Site Verification Placeholder -->
     <meta name="google-site-verification" content="h3iSBQ1Ajgq7hU09gvD5ASXdI09d-XhUN4dwmfMRl_I" />
     <script src="https://cdn.tailwindcss.com"></script>
@@ -126,6 +128,21 @@ $data = require 'data.php';
         .hero-radar { animation: signal-float 9s ease-in-out infinite; }
         .hero-radar__sweep { transform-origin: 760px 220px; animation: radar-sweep 7s linear infinite; }
         .hero-radar__node { animation: node-pulse 2.4s ease-in-out infinite; }
+        .hero-hud-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--hairline);
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            backdrop-filter: blur(8px);
+        }
+        .hero-hud-pulse {
+            animation: signal-float 4s ease-in-out infinite;
+        }
+        .hero-hud-wave path {
+            stroke-dasharray: 200;
+            stroke-dashoffset: 200;
+            animation: trace-draw 2s ease-out infinite alternate;
+        }
         .hero-motion-grid {
             background-image: linear-gradient(var(--hairline) 1px, transparent 1px), linear-gradient(90deg, var(--hairline) 1px, transparent 1px);
             background-size: 42px 42px;
@@ -251,18 +268,23 @@ $data = require 'data.php';
 
                 <!-- Desktop links -->
                 <div class="hidden md:flex items-center gap-8">
-                    <?php foreach(['about'=>'About','interests'=>'Interests','projects'=>'Projects','contact'=>'Contact'] as $id=>$label): ?>
-                    <a href="#<?= $id ?>" class="font-mono text-label uppercase tracking-widest transition-colors duration-150"
-                       style="color:var(--ink-secondary)"
-                       onmouseover="this.style.color='var(--signal-amber)'"
-                       onmouseout="this.style.color='var(--ink-secondary)'"><?= $label ?></a>
-                    <?php endforeach; ?>
+                    <a href="#about" data-i18n="nav.about" class="font-mono text-label uppercase tracking-widest transition-colors duration-150" style="color:var(--ink-secondary)" onmouseover="this.style.color='var(--signal-amber)'" onmouseout="this.style.color='var(--ink-secondary)'"><?= $current['labels']['about'] ?></a>
+                    <a href="#interests" data-i18n="nav.interests" class="font-mono text-label uppercase tracking-widest transition-colors duration-150" style="color:var(--ink-secondary)" onmouseover="this.style.color='var(--signal-amber)'" onmouseout="this.style.color='var(--ink-secondary)'"><?= $current['labels']['interests'] ?></a>
+                    <a href="#projects" data-i18n="nav.projects" class="font-mono text-label uppercase tracking-widest transition-colors duration-150" style="color:var(--ink-secondary)" onmouseover="this.style.color='var(--signal-amber)'" onmouseout="this.style.color='var(--ink-secondary)'"><?= $current['labels']['projects'] ?></a>
+                    <a href="#contact" data-i18n="nav.contact" class="font-mono text-label uppercase tracking-widest transition-colors duration-150" style="color:var(--ink-secondary)" onmouseover="this.style.color='var(--signal-amber)'" onmouseout="this.style.color='var(--ink-secondary)'"><?= $current['labels']['contact'] ?></a>
                 </div>
 
-                <!-- Right: theme toggle + hamburger -->
-                <div class="flex items-center gap-4 ml-auto">
+                <!-- Right: Language Switcher + Theme toggle + Hamburger -->
+                <div class="flex items-center gap-3 ml-auto">
+
+                    <!-- Language Switcher Button -->
+                    <div class="flex items-center rounded-btn p-0.5" style="border:1px solid var(--hairline); background:var(--bg-surface)">
+                        <button type="button" onclick="switchLanguage('id')" id="lang-btn-id" class="px-2 py-0.5 text-xs font-mono rounded transition-colors <?= $lang === 'id' ? 'font-bold' : '' ?>" style="<?= $lang === 'id' ? 'background:var(--signal-amber); color:var(--bg-base)' : 'color:var(--ink-secondary)' ?>">ID</button>
+                        <button type="button" onclick="switchLanguage('en')" id="lang-btn-en" class="px-2 py-0.5 text-xs font-mono rounded transition-colors <?= $lang === 'en' ? 'font-bold' : '' ?>" style="<?= $lang === 'en' ? 'background:var(--signal-amber); color:var(--bg-base)' : 'color:var(--ink-secondary)' ?>">EN</button>
+                    </div>
+
                     <!-- Theme toggle: icon button -->
-                        <button id="themeToggle" type="button" aria-label="Toggle theme"
+                    <button id="themeToggle" type="button" aria-label="Toggle theme"
                             class="w-8 h-8 flex items-center justify-center rounded-btn transition-colors duration-150 focus-visible:outline focus-visible:outline-2"
                             style="border:1px solid var(--hairline); color:var(--ink-secondary)"
                             onmouseover="this.style.borderColor='var(--signal-amber)'"
@@ -293,11 +315,10 @@ $data = require 'data.php';
         <!-- Mobile menu -->
         <div class="hidden md:hidden" id="mobile-menu" style="border-top:1px solid var(--hairline); background:var(--bg-base)">
             <div class="px-6 py-4 flex flex-col gap-4">
-                <?php foreach(['about'=>'About','interests'=>'Interests','projects'=>'Projects','contact'=>'Contact'] as $id=>$label): ?>
-                <a href="#<?= $id ?>" onclick="document.getElementById('mobile-menu').classList.add('hidden')"
-                   class="font-mono text-label uppercase tracking-widest"
-                   style="color:var(--ink-secondary)"><?= $label ?></a>
-                <?php endforeach; ?>
+                <a href="#about" data-i18n="nav.about" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="font-mono text-label uppercase tracking-widest" style="color:var(--ink-secondary)"><?= $current['labels']['about'] ?></a>
+                <a href="#interests" data-i18n="nav.interests" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="font-mono text-label uppercase tracking-widest" style="color:var(--ink-secondary)"><?= $current['labels']['interests'] ?></a>
+                <a href="#projects" data-i18n="nav.projects" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="font-mono text-label uppercase tracking-widest" style="color:var(--ink-secondary)"><?= $current['labels']['projects'] ?></a>
+                <a href="#contact" data-i18n="nav.contact" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="font-mono text-label uppercase tracking-widest" style="color:var(--ink-secondary)"><?= $current['labels']['contact'] ?></a>
             </div>
         </div>
     </nav>
@@ -325,48 +346,81 @@ $data = require 'data.php';
         <div class="max-w-[1200px] mx-auto px-6 md:px-12 w-full z-10">
 
             <!-- Eyebrow -->
-            <span class="badge badge-active mb-6 inline-block">Status: Open for Work</span>
+            <div class="flex items-center gap-3 mb-6">
+                <span id="heroStatus" class="badge badge-active inline-block"><?= $current['profile']['status'] ?></span>
+                <span class="font-mono text-xs hidden sm:inline-block tracking-wider opacity-60" style="color:var(--ink-secondary)">// SIGNAL & INK v2.5</span>
+            </div>
 
             <div class="flex flex-col md:flex-row items-center md:items-start justify-between gap-12 md:gap-16">
 
                 <!-- Text Content (Left) -->
                 <div class="flex-1 order-2 md:order-1">
-                    <p class="font-mono text-label uppercase mb-3" style="color:var(--ink-secondary)">Halo, saya</p>
+                    <p data-i18n="hero.greeting" class="font-mono text-label uppercase mb-3" style="color:var(--ink-secondary)">Halo, saya</p>
 
                     <h1 class="font-display text-display-xl tracking-tight mb-2" style="color:var(--ink-primary)">
-                        <?= $data['profile']['name'] ?><span style="color:var(--signal-amber)">.</span>
+                        <span id="heroName"><?= $current['profile']['name'] ?></span><span style="color:var(--signal-amber)">.</span>
                     </h1>
 
-                    <p class="font-display text-display-m mb-8" style="color:var(--ink-secondary)">
-                        <?= $data['profile']['title'] ?>
+                    <p id="heroTitle" class="font-display text-display-m mb-8" style="color:var(--ink-secondary)">
+                        <?= $current['profile']['title'] ?>
                     </p>
 
-                    <p class="text-body max-w-xl mb-10 leading-relaxed" style="color:var(--ink-secondary)">
-                        <?= $data['profile']['summary'] ?>
+                    <p id="heroSummary" class="text-body max-w-xl mb-10 leading-relaxed" style="color:var(--ink-secondary)">
+                        <?= $current['profile']['summary'] ?>
                     </p>
 
                     <div class="flex flex-wrap gap-3">
-                        <a href="#contact" class="btn-primary">
-                            Get in Touch
+                        <a href="#contact" data-i18n="btn.say_hello" class="btn-primary">
+                            <span id="sayHelloText"><?= $current['labels']['say_hello'] ?></span>
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                         </a>
-                        <a href="#projects" class="btn-secondary">Lihat Proyek</a>
-                        <a href="Muhammad Fakhri_Rizaldi_Resume.pdf" download class="btn-secondary">
+                        <a href="#projects" id="viewProjectsBtn" class="btn-secondary"><?= $current['labels']['view_projects'] ?></a>
+                        <a id="cvDownloadBtn" href="<?= $current['profile']['cv_file'] ?>" download="<?= $current['profile']['cv_file'] ?>" class="btn-secondary">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-                            Unduh CV
+                            <span id="cvBtnText"><?= $current['profile']['cv_label'] ?></span>
                         </a>
                     </div>
                 </div>
 
-                <!-- Photo (Right) -->
-                <div class="flex-shrink-0 order-1 md:order-2">
+                <!-- Photo + Rich Telemetry Graphic (Right) -->
+                <div class="flex-shrink-0 order-1 md:order-2 relative">
+                    
+                    <!-- HUD Telemetry Card 1 (Top Left Floating) -->
+                    <div class="hero-hud-card hero-hud-pulse hidden sm:flex items-center gap-3 px-3.5 py-2 absolute -top-5 -left-12 z-20 font-mono text-[11px]">
+                        <span class="w-2 h-2 rounded-full" style="background:var(--signal-amber)"></span>
+                        <span style="color:var(--ink-primary)">SAMPLING: 24.0 kHz</span>
+                    </div>
+
+                    <!-- Photo Container with Corner Crosshair Ticks -->
                     <div class="relative w-64 h-64 md:w-80 md:h-80">
+                        <!-- Corner Crosshairs -->
+                        <div class="absolute -top-2 -left-2 w-4 h-4 border-t-2 border-l-2 z-20" style="border-color:var(--signal-amber)"></div>
+                        <div class="absolute -top-2 -right-2 w-4 h-4 border-t-2 border-r-2 z-20" style="border-color:var(--signal-amber)"></div>
+                        <div class="absolute -bottom-2 -left-2 w-4 h-4 border-b-2 border-l-2 z-20" style="border-color:var(--signal-amber)"></div>
+                        <div class="absolute -bottom-2 -right-2 w-4 h-4 border-b-2 border-r-2 z-20" style="border-color:var(--signal-amber)"></div>
+
                         <div class="w-full h-full rounded-card overflow-hidden" style="border:1px solid var(--hairline)">
                             <img class="w-full h-full object-cover" 
                                  src="assets/profile.jpeg" 
-                                 alt="Foto <?= $data['profile']['name'] ?>">
+                                 alt="Foto <?= $current['profile']['name'] ?>">
                         </div>
                     </div>
+
+                    <!-- HUD Waveform Widget (Bottom Right Floating) -->
+                    <div class="hero-hud-card hidden sm:block p-3 absolute -bottom-6 -right-8 z-20 w-44 font-mono text-[10px]">
+                        <div class="flex justify-between items-center mb-1" style="color:var(--ink-secondary)">
+                            <span>SIGNAL WAVE</span>
+                            <span style="color:var(--trace-teal)">12ms</span>
+                        </div>
+                        <svg class="hero-hud-wave w-full h-6" viewBox="0 0 160 30" fill="none">
+                            <path d="M0 15 Q20 5 40 15 T80 15 T120 5 T160 15" stroke="var(--trace-teal)" stroke-width="2" fill="none" />
+                        </svg>
+                        <div class="flex justify-between items-center mt-1 text-[9px]" style="color:var(--ink-secondary)">
+                            <span>LATENCY: LOW</span>
+                            <span style="color:var(--signal-amber)">99.4%</span>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -385,7 +439,7 @@ $data = require 'data.php';
     <!-- Timeline: Experience + Education (combined, sorted by period desc) -->
     <?php
         $timeline = [];
-        foreach ($data['experience'] as $e) {
+        foreach ($current['experience'] as $e) {
             $timeline[] = [
                 'period'      => $e['period'],
                 'title'       => $e['role'],
@@ -394,7 +448,7 @@ $data = require 'data.php';
                 'type'        => $e['type'] ?? 'experience',
             ];
         }
-        foreach ($data['education'] as $e) {
+        foreach ($current['education'] as $e) {
             $timeline[] = [
                 'period'      => $e['period'],
                 'title'       => $e['degree'],
@@ -490,7 +544,7 @@ $data = require 'data.php';
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-                <?php foreach ($data['career_interests'] as $index => $interest): ?>
+                <?php foreach ($current['career_interests'] as $index => $interest): ?>
                 <div class="card-base p-8 flex flex-col justify-between group">
                     <!-- Icon -->
                     <div class="mb-6">
@@ -579,7 +633,7 @@ $data = require 'data.php';
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <?php foreach ($data['projects'] as $index => $project): ?>
+                <?php foreach ($current['projects'] as $index => $project): ?>
                 <div onclick="openProjectModal(<?= $index ?>)"
                      onkeydown="if(event.key==='Enter'||event.key===' '){openProjectModal(<?= $index ?>)}"
                      tabindex="0" role="button"
@@ -680,9 +734,10 @@ $data = require 'data.php';
 
     <!-- Pass PHP data to JS -->
     <script>
-        const projectsData = <?= json_encode($data['projects']) ?>;
+        const portfolioData = <?= json_encode($data) ?>;
+        const projectsData = portfolioData['id']['projects'];
     </script>
-    <script src="script.js?v=20260813-theme-fix"></script>
+    <script src="script.js?v=20260813-lang-fix"></script>
 
     <!-- Contact Section -->
     <section id="contact" class="py-24 transition-colors duration-300" style="background:var(--bg-base); border-top:1px solid var(--hairline)">
@@ -701,14 +756,14 @@ $data = require 'data.php';
                 </p>
 
                 <div class="flex flex-wrap gap-3 mb-12">
-                    <a href="mailto:<?= $data['profile']['email'] ?>" class="btn-primary">
+                    <a href="mailto:<?= $current['profile']['email'] ?>" class="btn-primary">
                         Say Hello
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                     </a>
                 </div>
 
                 <div class="flex gap-4">
-                    <?php foreach ($data['profile']['socials'] as $platform => $link): ?>
+                    <?php foreach ($current['profile']['socials'] as $platform => $link): ?>
                     <a href="<?= $link ?>" target="_blank" rel="noopener"
                        class="w-10 h-10 flex items-center justify-center rounded-btn transition-colors duration-150 focus-visible:outline focus-visible:outline-2"
                        style="border:1px solid var(--hairline); color:var(--ink-secondary)"
@@ -718,7 +773,7 @@ $data = require 'data.php';
                         <?php if ($platform === 'linkedin'): ?>
                             <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" clip-rule="evenodd"/></svg>
                         <?php elseif ($platform === 'instagram'): ?>
-                            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.8,2H16.2C19.4,2 22,4.6 22,7.8V16.2A5.8,5.8 0 0,1 16.2,22H7.8C4.6,22 2,19.4 2,16.2V7.8A5.8,5.8 0 0,1 7.8,2M7.6,4A3.6,3.6 0 0,0 4,7.6V16.4C4,18.39 5.61,20 7.6,20H16.4A3.6,3.6 0 0,0 20,16.4V7.6C20,5.61 18.39,4 16.4,4H7.6M17.25,5.5A1.25,1.25 0 0,1 18.5,6.75A1.25,1.25 0 0,1 17.25,8A1.25,1.25 0 0,1 16,6.75A1.25,1.25 0 0,1 17.25,5.5M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9Z"/></svg>
+                            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.8,2H16.2C19.4,2 22,4.6 22,7.8V16.2A5.8,5.8 0 0,1 16.2,22H7.8C4.6,22 2,19.4 2,16.2V7.8A5.8,5.8 0 0,1 7.8,2M7.6,4A3.6,3.6 0 0,0 4,7.6V16.4C4,18.39 5.61,20 7.6,20H16.4A3.6,3.6 0 0,0 20,16.4V7.6C20,5.61 18.39,4 16.4,4H7.6M17.25,5.5A1.25,1.25 0 0,1 18.5,6.75A1.25,1.25 0 0,1 16,6.75A1.25,1.25 0 0,1 17.25,5.5M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9Z"/></svg>
                         <?php endif; ?>
                     </a>
                     <?php endforeach; ?>
@@ -726,7 +781,7 @@ $data = require 'data.php';
             </div>
 
             <footer class="mt-20 pt-8" style="border-top:1px solid var(--hairline)">
-                <p class="font-mono text-label" style="color:var(--ink-secondary)">&copy; <?= date('Y') ?> <?= $data['profile']['name'] ?>. All rights reserved.</p>
+                <p class="font-mono text-label" style="color:var(--ink-secondary)">&copy; <?= date('Y') ?> <?= $current['profile']['name'] ?>. All rights reserved.</p>
             </footer>
         </div>
     </section>

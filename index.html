@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -123,6 +123,21 @@
         .hero-radar { animation: signal-float 9s ease-in-out infinite; }
         .hero-radar__sweep { transform-origin: 760px 220px; animation: radar-sweep 7s linear infinite; }
         .hero-radar__node { animation: node-pulse 2.4s ease-in-out infinite; }
+        .hero-hud-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--hairline);
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            backdrop-filter: blur(8px);
+        }
+        .hero-hud-pulse {
+            animation: signal-float 4s ease-in-out infinite;
+        }
+        .hero-hud-wave path {
+            stroke-dasharray: 200;
+            stroke-dashoffset: 200;
+            animation: trace-draw 2s ease-out infinite alternate;
+        }
         .hero-motion-grid {
             background-image: linear-gradient(var(--hairline) 1px, transparent 1px), linear-gradient(90deg, var(--hairline) 1px, transparent 1px);
             background-size: 42px 42px;
@@ -248,28 +263,23 @@
 
                 <!-- Desktop links -->
                 <div class="hidden md:flex items-center gap-8">
-                                        <a href="#about" class="font-mono text-label uppercase tracking-widest transition-colors duration-150"
-                       style="color:var(--ink-secondary)"
-                       onmouseover="this.style.color='var(--signal-amber)'"
-                       onmouseout="this.style.color='var(--ink-secondary)'">About</a>
-                                        <a href="#interests" class="font-mono text-label uppercase tracking-widest transition-colors duration-150"
-                       style="color:var(--ink-secondary)"
-                       onmouseover="this.style.color='var(--signal-amber)'"
-                       onmouseout="this.style.color='var(--ink-secondary)'">Interests</a>
-                                        <a href="#projects" class="font-mono text-label uppercase tracking-widest transition-colors duration-150"
-                       style="color:var(--ink-secondary)"
-                       onmouseover="this.style.color='var(--signal-amber)'"
-                       onmouseout="this.style.color='var(--ink-secondary)'">Projects</a>
-                                        <a href="#contact" class="font-mono text-label uppercase tracking-widest transition-colors duration-150"
-                       style="color:var(--ink-secondary)"
-                       onmouseover="this.style.color='var(--signal-amber)'"
-                       onmouseout="this.style.color='var(--ink-secondary)'">Contact</a>
-                                    </div>
+                    <a href="#about" data-i18n="nav.about" class="font-mono text-label uppercase tracking-widest transition-colors duration-150" style="color:var(--ink-secondary)" onmouseover="this.style.color='var(--signal-amber)'" onmouseout="this.style.color='var(--ink-secondary)'">Tentang</a>
+                    <a href="#interests" data-i18n="nav.interests" class="font-mono text-label uppercase tracking-widest transition-colors duration-150" style="color:var(--ink-secondary)" onmouseover="this.style.color='var(--signal-amber)'" onmouseout="this.style.color='var(--ink-secondary)'">Minat Karir</a>
+                    <a href="#projects" data-i18n="nav.projects" class="font-mono text-label uppercase tracking-widest transition-colors duration-150" style="color:var(--ink-secondary)" onmouseover="this.style.color='var(--signal-amber)'" onmouseout="this.style.color='var(--ink-secondary)'">Proyek</a>
+                    <a href="#contact" data-i18n="nav.contact" class="font-mono text-label uppercase tracking-widest transition-colors duration-150" style="color:var(--ink-secondary)" onmouseover="this.style.color='var(--signal-amber)'" onmouseout="this.style.color='var(--ink-secondary)'">Kontak</a>
+                </div>
 
-                <!-- Right: theme toggle + hamburger -->
-                <div class="flex items-center gap-4 ml-auto">
+                <!-- Right: Language Switcher + Theme toggle + Hamburger -->
+                <div class="flex items-center gap-3 ml-auto">
+
+                    <!-- Language Switcher Button -->
+                    <div class="flex items-center rounded-btn p-0.5" style="border:1px solid var(--hairline); background:var(--bg-surface)">
+                        <button type="button" onclick="switchLanguage('id')" id="lang-btn-id" class="px-2 py-0.5 text-xs font-mono rounded transition-colors font-bold" style="background:var(--signal-amber); color:var(--bg-base)">ID</button>
+                        <button type="button" onclick="switchLanguage('en')" id="lang-btn-en" class="px-2 py-0.5 text-xs font-mono rounded transition-colors " style="color:var(--ink-secondary)">EN</button>
+                    </div>
+
                     <!-- Theme toggle: icon button -->
-                        <button id="themeToggle" type="button" aria-label="Toggle theme"
+                    <button id="themeToggle" type="button" aria-label="Toggle theme"
                             class="w-8 h-8 flex items-center justify-center rounded-btn transition-colors duration-150 focus-visible:outline focus-visible:outline-2"
                             style="border:1px solid var(--hairline); color:var(--ink-secondary)"
                             onmouseover="this.style.borderColor='var(--signal-amber)'"
@@ -300,19 +310,11 @@
         <!-- Mobile menu -->
         <div class="hidden md:hidden" id="mobile-menu" style="border-top:1px solid var(--hairline); background:var(--bg-base)">
             <div class="px-6 py-4 flex flex-col gap-4">
-                                <a href="#about" onclick="document.getElementById('mobile-menu').classList.add('hidden')"
-                   class="font-mono text-label uppercase tracking-widest"
-                   style="color:var(--ink-secondary)">About</a>
-                                <a href="#interests" onclick="document.getElementById('mobile-menu').classList.add('hidden')"
-                   class="font-mono text-label uppercase tracking-widest"
-                   style="color:var(--ink-secondary)">Interests</a>
-                                <a href="#projects" onclick="document.getElementById('mobile-menu').classList.add('hidden')"
-                   class="font-mono text-label uppercase tracking-widest"
-                   style="color:var(--ink-secondary)">Projects</a>
-                                <a href="#contact" onclick="document.getElementById('mobile-menu').classList.add('hidden')"
-                   class="font-mono text-label uppercase tracking-widest"
-                   style="color:var(--ink-secondary)">Contact</a>
-                            </div>
+                <a href="#about" data-i18n="nav.about" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="font-mono text-label uppercase tracking-widest" style="color:var(--ink-secondary)">Tentang</a>
+                <a href="#interests" data-i18n="nav.interests" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="font-mono text-label uppercase tracking-widest" style="color:var(--ink-secondary)">Minat Karir</a>
+                <a href="#projects" data-i18n="nav.projects" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="font-mono text-label uppercase tracking-widest" style="color:var(--ink-secondary)">Proyek</a>
+                <a href="#contact" data-i18n="nav.contact" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="font-mono text-label uppercase tracking-widest" style="color:var(--ink-secondary)">Kontak</a>
+            </div>
         </div>
     </nav>
 
@@ -339,46 +341,79 @@
         <div class="max-w-[1200px] mx-auto px-6 md:px-12 w-full z-10">
 
             <!-- Eyebrow -->
-            <span class="badge badge-active mb-6 inline-block">Status: Open for Work</span>
+            <div class="flex items-center gap-3 mb-6">
+                <span id="heroStatus" class="badge badge-active inline-block">Status: Terbuka untuk Pekerjaan</span>
+                <span class="font-mono text-xs hidden sm:inline-block tracking-wider opacity-60" style="color:var(--ink-secondary)">// SIGNAL & INK v2.5</span>
+            </div>
 
             <div class="flex flex-col md:flex-row items-center md:items-start justify-between gap-12 md:gap-16">
 
                 <!-- Text Content (Left) -->
                 <div class="flex-1 order-2 md:order-1">
-                    <p class="font-mono text-label uppercase mb-3" style="color:var(--ink-secondary)">Halo, saya</p>
+                    <p data-i18n="hero.greeting" class="font-mono text-label uppercase mb-3" style="color:var(--ink-secondary)">Halo, saya</p>
 
                     <h1 class="font-display text-display-xl tracking-tight mb-2" style="color:var(--ink-primary)">
-                        Fakhri<span style="color:var(--signal-amber)">.</span>
+                        <span id="heroName">Fakhri</span><span style="color:var(--signal-amber)">.</span>
                     </h1>
 
-                    <p class="font-display text-display-m mb-8" style="color:var(--ink-secondary)">
+                    <p id="heroTitle" class="font-display text-display-m mb-8" style="color:var(--ink-secondary)">
                         Data Analyst & Web Developer                    </p>
 
-                    <p class="text-body max-w-xl mb-10 leading-relaxed" style="color:var(--ink-secondary)">
+                    <p id="heroSummary" class="text-body max-w-xl mb-10 leading-relaxed" style="color:var(--ink-secondary)">
                         Mahasiswa Teknik Informatika Universitas Komputer Indonesia dengan minat di Data Science, Machine Learning, dan pengembangan web. Terbiasa mengolah data menjadi wawasan yang dapat ditindaklanjuti, membangun sistem berbasis PHP/Laravel, dan merancang visual yang komunikatif.                    </p>
 
                     <div class="flex flex-wrap gap-3">
-                        <a href="#contact" class="btn-primary">
-                            Get in Touch
+                        <a href="#contact" data-i18n="btn.say_hello" class="btn-primary">
+                            <span id="sayHelloText">Sapa Saya</span>
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                         </a>
-                        <a href="#projects" class="btn-secondary">Lihat Proyek</a>
-                        <a href="Muhammad Fakhri_Rizaldi_Resume.pdf" download class="btn-secondary">
+                        <a href="#projects" id="viewProjectsBtn" class="btn-secondary">Lihat Proyek</a>
+                        <a id="cvDownloadBtn" href="Muhammad Fakhri_Rizaldi_Resume (Ind.Ver).pdf" download="Muhammad Fakhri_Rizaldi_Resume (Ind.Ver).pdf" class="btn-secondary">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-                            Unduh CV
+                            <span id="cvBtnText">Unduh CV (ID)</span>
                         </a>
                     </div>
                 </div>
 
-                <!-- Photo (Right) -->
-                <div class="flex-shrink-0 order-1 md:order-2">
+                <!-- Photo + Rich Telemetry Graphic (Right) -->
+                <div class="flex-shrink-0 order-1 md:order-2 relative">
+                    
+                    <!-- HUD Telemetry Card 1 (Top Left Floating) -->
+                    <div class="hero-hud-card hero-hud-pulse hidden sm:flex items-center gap-3 px-3.5 py-2 absolute -top-5 -left-12 z-20 font-mono text-[11px]">
+                        <span class="w-2 h-2 rounded-full" style="background:var(--signal-amber)"></span>
+                        <span style="color:var(--ink-primary)">SAMPLING: 24.0 kHz</span>
+                    </div>
+
+                    <!-- Photo Container with Corner Crosshair Ticks -->
                     <div class="relative w-64 h-64 md:w-80 md:h-80">
+                        <!-- Corner Crosshairs -->
+                        <div class="absolute -top-2 -left-2 w-4 h-4 border-t-2 border-l-2 z-20" style="border-color:var(--signal-amber)"></div>
+                        <div class="absolute -top-2 -right-2 w-4 h-4 border-t-2 border-r-2 z-20" style="border-color:var(--signal-amber)"></div>
+                        <div class="absolute -bottom-2 -left-2 w-4 h-4 border-b-2 border-l-2 z-20" style="border-color:var(--signal-amber)"></div>
+                        <div class="absolute -bottom-2 -right-2 w-4 h-4 border-b-2 border-r-2 z-20" style="border-color:var(--signal-amber)"></div>
+
                         <div class="w-full h-full rounded-card overflow-hidden" style="border:1px solid var(--hairline)">
                             <img class="w-full h-full object-cover" 
                                  src="assets/profile.jpeg" 
                                  alt="Foto Fakhri">
                         </div>
                     </div>
+
+                    <!-- HUD Waveform Widget (Bottom Right Floating) -->
+                    <div class="hero-hud-card hidden sm:block p-3 absolute -bottom-6 -right-8 z-20 w-44 font-mono text-[10px]">
+                        <div class="flex justify-between items-center mb-1" style="color:var(--ink-secondary)">
+                            <span>SIGNAL WAVE</span>
+                            <span style="color:var(--trace-teal)">12ms</span>
+                        </div>
+                        <svg class="hero-hud-wave w-full h-6" viewBox="0 0 160 30" fill="none">
+                            <path d="M0 15 Q20 5 40 15 T80 15 T120 5 T160 15" stroke="var(--trace-teal)" stroke-width="2" fill="none" />
+                        </svg>
+                        <div class="flex justify-between items-center mt-1 text-[9px]" style="color:var(--ink-secondary)">
+                            <span>LATENCY: LOW</span>
+                            <span style="color:var(--signal-amber)">99.4%</span>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -808,9 +843,10 @@
 
     <!-- Pass PHP data to JS -->
     <script>
-        const projectsData = [{"title":"Sistem Informasi Restoran","description":"Sistem manajemen restoran multi-role (Admin, Kasir, Koki, Pelayan) dengan fitur pemesanan digital, reservasi meja, integrasi pembayaran Midtrans, manajemen stok menu, verifikasi pesanan dapur, dan dashboard keuangan.","tech_stack":["Laravel","MySQL","Midtrans API"],"link":"https:\/\/restoranproif7.my.id","preview_image":"assets\/RP 0.jpg","screenshots":["assets\/RP 1.jpg","assets\/RP 2.jpg","assets\/RP 3.jpg","assets\/RP 4.jpg","assets\/RP 5.jpg"]},{"title":"Aplikasi DonasiYuk","description":"Aplikasi donasi berbasis publik yang menghubungkan pendonasi dengan penerima manfaat secara cepat. Dilengkapi fitur live chat real-time menggunakan Laravel Livewire untuk komunikasi langsung.","tech_stack":["Laravel","Livewire","Tailwind CSS"],"link":"https:\/\/fakhriproject.my.id","preview_image":"assets\/DY 1.jpg","screenshots":["assets\/DY 2.jpg","assets\/DY 3.jpg","assets\/DY 4.jpg","assets\/DY 5.jpg"]},{"title":"Analisis Strategis Startup (SE-Asia)","description":"Dashboard visualisasi data yang menganalisis ekosistem startup di Asia Tenggara (2009-2013). Menampilkan tren investasi, dominasi pasar E-Commerce di Indonesia, peluang B2B Software, serta perbandingan distribusi pendanaan regional.","tech_stack":["Looker Studio","Python","Data Analytics"],"link":"https:\/\/lookerstudio.google.com\/s\/l5Rtf3uRI1s","preview_image":"assets\/D1.jpg","screenshots":["assets\/D1.jpg"]}];
+        const portfolioData = {"id":{"profile":{"name":"Fakhri","title":"Data Analyst & Web Developer","email":"muhamadfakhri06@gmail.com","phone":"+62 812 3456 7890","location":"Indonesia","summary":"Mahasiswa Teknik Informatika Universitas Komputer Indonesia dengan minat di Data Science, Machine Learning, dan pengembangan web. Terbiasa mengolah data menjadi wawasan yang dapat ditindaklanjuti, membangun sistem berbasis PHP\/Laravel, dan merancang visual yang komunikatif.","status":"Status: Terbuka untuk Pekerjaan","cv_file":"Muhammad Fakhri_Rizaldi_Resume (Ind.Ver).pdf","cv_label":"Unduh CV (ID)","socials":{"linkedin":"https:\/\/www.linkedin.com\/in\/muhamad-fakhri-399193292\/","instagram":"https:\/\/www.instagram.com\/sobatfakhri\/?hl=en"}},"career_interests":[{"title":"Data Scientist","description":"Mengungkap pola tersembunyi dalam kumpulan data yang kompleks untuk mendorong pengambilan keputusan yang cerdas. Bersemangat membangun model prediksi dan memanfaatkan machine learning untuk memecahkan masalah dunia nyata.","icon":"science","tags":["Machine Learning","Python","Predictive Modeling","AI"]},{"title":"Data Analyst","description":"Mengubah data mentah menjadi wawasan yang dapat ditindaklanjuti melalui storytelling dan visualisasi. Spesialis dalam membuat dashboard interaktif yang memberdayakan bisnis untuk memahami kinerja mereka secara sekilas.","icon":"analytics","tags":["Visualisasi Data","SQL","Business Intelligence","Looker"]},{"title":"ML Engineer","description":"Merancang dan men-deploy pipeline machine learning dari eksperimen hingga produksi. Fokus pada efisiensi model, reprodusibilitas eksperimen, dan integrasi model ke dalam sistem nyata yang dapat diskalakan.","icon":"ml","tags":["Python","TensorFlow","MLOps","API Integration"]}],"experience":[{"role":"Divisi P3K","company":"Volunteer GAMATIF 2024","period":"2024","description":"Bertanggung jawab atas kesehatan dan keselamatan peserta serta panitia selama acara berlangsung. Siap sedia menangani pertolongan pertama pada kecelakaan ringan dan memastikan kondisi fisik seluruh elemen acara tetap prima.","type":"volunteer"},{"role":"Divisi Design Graphic","company":"PT INTI OPTIMA TEKNOLOGI","period":"2022","description":"Praktik Kerja Lapangan. Bertanggung jawab membuat desain grafis untuk kebutuhan perusahaan dan menciptakan karakter maskot 3D menggunakan software Blender.","type":"internship"}],"education":[{"institution":"Universitas Komputer Indonesia","degree":"S1 Teknik Informatika","period":"2023 - Sekarang"}],"projects":[{"title":"Sistem Informasi Restoran","description":"Sistem manajemen restoran multi-role (Admin, Kasir, Koki, Pelayan) dengan fitur pemesanan digital, reservasi meja, integrasi pembayaran Midtrans, manajemen stok menu, verifikasi pesanan dapur, dan dashboard keuangan.","tech_stack":["Laravel","MySQL","Midtrans API"],"link":"https:\/\/restoranproif7.my.id","preview_image":"assets\/RP 0.jpg","screenshots":["assets\/RP 1.jpg","assets\/RP 2.jpg","assets\/RP 3.jpg","assets\/RP 4.jpg","assets\/RP 5.jpg"]},{"title":"Aplikasi DonasiYuk","description":"Aplikasi donasi berbasis publik yang menghubungkan pendonasi dengan penerima manfaat secara cepat. Dilengkapi fitur live chat real-time menggunakan Laravel Livewire untuk komunikasi langsung.","tech_stack":["Laravel","Livewire","Tailwind CSS"],"link":"https:\/\/fakhriproject.my.id","preview_image":"assets\/DY 1.jpg","screenshots":["assets\/DY 2.jpg","assets\/DY 3.jpg","assets\/DY 4.jpg","assets\/DY 5.jpg"]},{"title":"Analisis Strategis Startup (SE-Asia)","description":"Dashboard visualisasi data yang menganalisis ekosistem startup di Asia Tenggara (2009-2013). Menampilkan tren investasi, dominasi pasar E-Commerce di Indonesia, peluang B2B Software, serta perbandingan distribusi pendanaan regional.","tech_stack":["Looker Studio","Python","Data Analytics"],"link":"https:\/\/lookerstudio.google.com\/s\/l5Rtf3uRI1s","preview_image":"assets\/D1.jpg","screenshots":["assets\/D1.jpg"]}],"labels":{"about":"Tentang","interests":"Minat Karir","projects":"Proyek","contact":"Kontak","view_projects":"Lihat Proyek","say_hello":"Sapa Saya","tech_stack":"Keahlian Teknis","design_editing":"Desain & Editing","timeline":"Pengalaman & Pendidikan","contact_title":"Mari Bekerja Sama","contact_desc":"Saya selalu terbuka untuk diskusi mengenai analisis data, machine learning, atau proyek web development.","visit_website":"Kunjungi Website"}},"en":{"profile":{"name":"Fakhri","title":"Data Analyst & Web Developer","email":"muhamadfakhri06@gmail.com","phone":"+62 812 3456 7890","location":"Indonesia","summary":"Informatics Engineering student at Indonesian Computer University focusing on Data Science, Machine Learning, and Web Development. Experienced in transforming raw data into actionable insights, building PHP\/Laravel systems, and designing communicative visual assets.","status":"Status: Open for Work","cv_file":"Muhammad Fakhri_Rizaldi_Resume.pdf","cv_label":"Download CV (EN)","socials":{"linkedin":"https:\/\/www.linkedin.com\/in\/muhamad-fakhri-399193292\/","instagram":"https:\/\/www.instagram.com\/sobatfakhri\/?hl=en"}},"career_interests":[{"title":"Data Scientist","description":"Uncovering hidden patterns within complex datasets to drive intelligent decision-making. Passionate about building predictive models and leveraging machine learning for real-world solutions.","icon":"science","tags":["Machine Learning","Python","Predictive Modeling","AI"]},{"title":"Data Analyst","description":"Transforming raw data into actionable business intelligence through visual storytelling. Specialized in building interactive dashboards to clarify key performance metrics.","icon":"analytics","tags":["Data Viz","SQL","Business Intelligence","Looker"]},{"title":"ML Engineer","description":"Designing and deploying end-to-end machine learning pipelines from experimentation to production. Focused on model efficiency, reproducibility, and MLOps.","icon":"ml","tags":["Python","TensorFlow","MLOps","API Integration"]}],"experience":[{"role":"First Aid Division","company":"GAMATIF 2024 Volunteer","period":"2024","description":"Responsible for health and safety management during the event, administering first aid and maintaining participant wellness.","type":"volunteer"},{"role":"Graphic Designer","company":"PT INTI OPTIMA TEKNOLOGI","period":"2022","description":"Internship. Created corporate graphic assets and designed a 3D mascot character using Blender.","type":"internship"}],"education":[{"institution":"Indonesian Computer University","degree":"B.S. Informatics Engineering","period":"2023 - Present"}],"projects":[{"title":"Restaurant Information System","description":"Multi-role restaurant management system (Admin, Cashier, Chef, Waiter) with digital ordering, table reservation, Midtrans payment gateway, inventory, kitchen status verification, and financial reporting.","tech_stack":["Laravel","MySQL","Midtrans API"],"link":"https:\/\/restoranproif7.my.id","preview_image":"assets\/RP 0.jpg","screenshots":["assets\/RP 1.jpg","assets\/RP 2.jpg","assets\/RP 3.jpg","assets\/RP 4.jpg","assets\/RP 5.jpg"]},{"title":"DonasiYuk Application","description":"Public donation platform connecting donors directly with beneficiaries. Features real-time live chat powered by Laravel Livewire.","tech_stack":["Laravel","Livewire","Tailwind CSS"],"link":"https:\/\/fakhriproject.my.id","preview_image":"assets\/DY 1.jpg","screenshots":["assets\/DY 2.jpg","assets\/DY 3.jpg","assets\/DY 4.jpg","assets\/DY 5.jpg"]},{"title":"Startup Ecosystem Strategic Analysis (SE-Asia)","description":"Data visualization dashboard analyzing Southeast Asian startup trends (2009-2013). Highlights investment metrics, E-Commerce dominance in Indonesia, B2B software opportunities, and regional funding distribution.","tech_stack":["Looker Studio","Python","Data Analytics"],"link":"https:\/\/lookerstudio.google.com\/s\/l5Rtf3uRI1s","preview_image":"assets\/D1.jpg","screenshots":["assets\/D1.jpg"]}],"labels":{"about":"About","interests":"Interests","projects":"Projects","contact":"Contact","view_projects":"View Projects","say_hello":"Say Hello","tech_stack":"Technical Stack","design_editing":"Design & Editing","timeline":"Experience & Education","contact_title":"Let's Work Together","contact_desc":"Open for opportunities and discussions in data analytics, machine learning, or web development projects.","visit_website":"Visit Website"}},"skills":[{"name":"PHP","logo":"https:\/\/cdn.jsdelivr.net\/gh\/devicons\/devicon\/icons\/php\/php-original.svg"},{"name":"Laravel","logo":"https:\/\/cdn.jsdelivr.net\/gh\/devicons\/devicon\/icons\/laravel\/laravel-original.svg"},{"name":"MySQL","logo":"https:\/\/cdn.jsdelivr.net\/gh\/devicons\/devicon\/icons\/mysql\/mysql-original.svg"},{"name":"Python","logo":"https:\/\/cdn.jsdelivr.net\/gh\/devicons\/devicon\/icons\/python\/python-original.svg"}],"editing_skills":[{"name":"Figma","logo":"https:\/\/cdn.jsdelivr.net\/gh\/devicons\/devicon\/icons\/figma\/figma-original.svg"},{"name":"Adobe Photoshop","logo":"https:\/\/cdn.jsdelivr.net\/gh\/devicons\/devicon@latest\/icons\/photoshop\/photoshop-original.svg"},{"name":"Adobe Illustrator","logo":"https:\/\/cdn.jsdelivr.net\/gh\/devicons\/devicon@latest\/icons\/illustrator\/illustrator-plain.svg"},{"name":"Adobe Premiere Pro","logo":"https:\/\/cdn.jsdelivr.net\/gh\/devicons\/devicon\/icons\/premierepro\/premierepro-original.svg"},{"name":"Canva","logo":"https:\/\/cdn.jsdelivr.net\/gh\/devicons\/devicon@latest\/icons\/canva\/canva-original.svg"},{"name":"CapCut","logo":"https:\/\/cdn.brandfetch.io\/idUmqKFgE3\/w\/400\/h\/400\/theme\/dark\/icon.jpeg?c=1dxbfHSJFAPEGdCLU4o5B"}]};
+        const projectsData = portfolioData['id']['projects'];
     </script>
-    <script src="script.js?v=20260813-theme-fix"></script>
+    <script src="script.js?v=20260813-lang-fix"></script>
 
     <!-- Contact Section -->
     <section id="contact" class="py-24 transition-colors duration-300" style="background:var(--bg-base); border-top:1px solid var(--hairline)">
@@ -850,7 +886,7 @@
                        onmouseover="this.style.borderColor='var(--signal-amber)';this.style.color='var(--signal-amber)'"
                        onmouseout="this.style.borderColor='var(--hairline)';this.style.color='var(--ink-secondary)'">
                         <span class="sr-only">Instagram</span>
-                                                    <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.8,2H16.2C19.4,2 22,4.6 22,7.8V16.2A5.8,5.8 0 0,1 16.2,22H7.8C4.6,22 2,19.4 2,16.2V7.8A5.8,5.8 0 0,1 7.8,2M7.6,4A3.6,3.6 0 0,0 4,7.6V16.4C4,18.39 5.61,20 7.6,20H16.4A3.6,3.6 0 0,0 20,16.4V7.6C20,5.61 18.39,4 16.4,4H7.6M17.25,5.5A1.25,1.25 0 0,1 18.5,6.75A1.25,1.25 0 0,1 17.25,8A1.25,1.25 0 0,1 16,6.75A1.25,1.25 0 0,1 17.25,5.5M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9Z"/></svg>
+                                                    <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.8,2H16.2C19.4,2 22,4.6 22,7.8V16.2A5.8,5.8 0 0,1 16.2,22H7.8C4.6,22 2,19.4 2,16.2V7.8A5.8,5.8 0 0,1 7.8,2M7.6,4A3.6,3.6 0 0,0 4,7.6V16.4C4,18.39 5.61,20 7.6,20H16.4A3.6,3.6 0 0,0 20,16.4V7.6C20,5.61 18.39,4 16.4,4H7.6M17.25,5.5A1.25,1.25 0 0,1 18.5,6.75A1.25,1.25 0 0,1 16,6.75A1.25,1.25 0 0,1 17.25,5.5M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9Z"/></svg>
                                             </a>
                                     </div>
             </div>
