@@ -50,6 +50,11 @@ function openProjectModal(index) {
             currentProject.tech_stack.forEach(tech => {
                 const badge = document.createElement('span');
                 badge.className = 'badge';
+                badge.innerText = tech;
+                tagsContainer.appendChild(badge);
+            });
+        }
+    }
 
     // Setup Carousel
     setupCarousel();

@@ -111,6 +111,8 @@
             }
         }
 
+        .hero-signal path { pathLength: 1; stroke-dasharray: 1; stroke-dashoffset: 1; }
+
         /* ── Component: Buttons ── */
         .btn-primary {
             display: inline-flex; align-items: center; gap: 0.5rem;
@@ -299,17 +301,17 @@
     <section id="about" class="min-h-screen flex flex-col justify-center pt-24 pb-16 md:pt-0 md:pb-0 relative overflow-hidden" style="background:var(--bg-base)">
 
         <!-- SVG Signal Line — signature element, spans full width -->
-        <svg class="absolute top-[38%] left-0 w-full h-24 pointer-events-none z-0" viewBox="0 0 1200 80" preserveAspectRatio="none" aria-hidden="true">
+        <svg class="hero-signal absolute top-[38%] left-0 w-full h-24 pointer-events-none z-0" viewBox="0 0 1200 80" preserveAspectRatio="none" aria-hidden="true">
             <path
                 d="M0,40 Q50,40 100,40 T200,40 T250,10 T300,70 T350,30 T400,50 T450,40 T500,40 T600,40 T700,40 T750,15 T800,65 T850,35 T900,45 T950,40 T1000,40 T1100,40 T1200,40"
                 fill="none" stroke="var(--signal-amber)" stroke-width="2" stroke-linecap="round"
-                style="--dash-length:1800; stroke-dasharray:1800; stroke-dashoffset:1800;"
+                style="--dash-length:1"
                 class="animate-[trace-draw_1.5s_ease-out_0.3s_forwards]" />
             <!-- faint duplicate for glow -->
             <path
                 d="M0,40 Q50,40 100,40 T200,40 T250,10 T300,70 T350,30 T400,50 T450,40 T500,40 T600,40 T700,40 T750,15 T800,65 T850,35 T900,45 T950,40 T1000,40 T1100,40 T1200,40"
                 fill="none" stroke="var(--signal-amber)" stroke-width="6" stroke-linecap="round" opacity="0.12"
-                style="--dash-length:1800; stroke-dasharray:1800; stroke-dashoffset:1800;"
+                style="--dash-length:1"
                 class="animate-[trace-draw_1.5s_ease-out_0.3s_forwards]" />
         </svg>
 
