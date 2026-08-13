@@ -110,9 +110,10 @@ $data = require 'data.php';
             0%, 100% { transform: translate3d(0, 0, 0); opacity: .42; }
             50% { transform: translate3d(0, -10px, 0); opacity: .7; }
         }
-        @keyframes signal-scan {
-            from { transform: translateX(-35%); }
-            to { transform: translateX(135%); }
+        @keyframes radar-sweep { to { transform: rotate(360deg); } }
+        @keyframes node-pulse {
+            0%, 100% { r: 3; opacity: .45; }
+            50% { r: 6; opacity: 1; }
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -122,18 +123,15 @@ $data = require 'data.php';
             }
         }
 
-        .hero-signal path { pathLength: 1; stroke-dasharray: 1; stroke-dashoffset: 1; }
+        .hero-radar { animation: signal-float 9s ease-in-out infinite; }
+        .hero-radar__sweep { transform-origin: 760px 220px; animation: radar-sweep 7s linear infinite; }
+        .hero-radar__node { animation: node-pulse 2.4s ease-in-out infinite; }
         .hero-motion-grid {
             background-image: linear-gradient(var(--hairline) 1px, transparent 1px), linear-gradient(90deg, var(--hairline) 1px, transparent 1px);
             background-size: 42px 42px;
             mask-image: radial-gradient(circle at 62% 45%, black 0 34%, transparent 68%);
-            opacity: .34;
-            animation: signal-float 8s ease-in-out infinite;
-        }
-        .hero-motion-scan {
-            background: linear-gradient(90deg, transparent, var(--trace-teal), transparent);
             opacity: .22;
-            animation: signal-scan 5.5s linear infinite;
+            animation: signal-float 8s ease-in-out infinite;
         }
 
         /* ── Component: Buttons ── */
@@ -307,21 +305,21 @@ $data = require 'data.php';
     <section id="about" class="min-h-screen flex flex-col justify-center pt-24 pb-16 md:pt-0 md:pb-0 relative overflow-hidden" style="background:var(--bg-base)">
 
         <div class="hero-motion-grid absolute inset-0 pointer-events-none z-0"></div>
-        <div class="hero-motion-scan absolute top-0 bottom-0 left-0 w-1/3 pointer-events-none z-0"></div>
 
-        <!-- SVG Signal Line — signature element, spans full width -->
-        <svg class="hero-signal absolute top-[38%] left-0 w-full h-24 pointer-events-none z-0" viewBox="0 0 1200 80" preserveAspectRatio="none" aria-hidden="true">
-            <path
-                d="M0,40 Q50,40 100,40 T200,40 T250,10 T300,70 T350,30 T400,50 T450,40 T500,40 T600,40 T700,40 T750,15 T800,65 T850,35 T900,45 T950,40 T1000,40 T1100,40 T1200,40"
-                fill="none" stroke="var(--signal-amber)" stroke-width="2" stroke-linecap="round"
-                style="--dash-length:1"
-                class="animate-[trace-draw_1.5s_ease-out_0.3s_forwards]" />
-            <!-- faint duplicate for glow -->
-            <path
-                d="M0,40 Q50,40 100,40 T200,40 T250,10 T300,70 T350,30 T400,50 T450,40 T500,40 T600,40 T700,40 T750,15 T800,65 T850,35 T900,45 T950,40 T1000,40 T1100,40 T1200,40"
-                fill="none" stroke="var(--signal-amber)" stroke-width="6" stroke-linecap="round" opacity="0.12"
-                style="--dash-length:1"
-                class="animate-[trace-draw_1.5s_ease-out_0.3s_forwards]" />
+        <!-- SVG Radar Graph — signature hero graphic -->
+        <svg class="hero-radar absolute right-[-220px] top-[11%] h-[560px] w-[820px] max-w-none pointer-events-none z-0 md:right-[-120px]" viewBox="0 0 900 560" fill="none" aria-hidden="true">
+            <circle cx="760" cy="220" r="96" stroke="var(--hairline)" stroke-width="1" />
+            <circle cx="760" cy="220" r="176" stroke="var(--hairline)" stroke-width="1" />
+            <circle cx="760" cy="220" r="256" stroke="var(--hairline)" stroke-width="1" />
+            <path class="hero-radar__sweep" d="M760 220 L760 -40 A260 260 0 0 1 1008 144 Z" fill="var(--trace-teal)" opacity="0.14" />
+            <path d="M218 364 C342 228 482 418 604 272 S806 100 882 182" stroke="var(--signal-amber)" stroke-width="2" stroke-linecap="round" stroke-dasharray="10 14" opacity="0.75" />
+            <path d="M126 234 L284 178 L420 288 L548 168 L692 246 L828 118" stroke="var(--trace-teal)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.65" />
+            <g fill="var(--signal-amber)">
+                <circle class="hero-radar__node" cx="126" cy="234" r="4" />
+                <circle class="hero-radar__node" cx="420" cy="288" r="4" style="animation-delay:.45s" />
+                <circle class="hero-radar__node" cx="692" cy="246" r="4" style="animation-delay:.9s" />
+                <circle class="hero-radar__node" cx="828" cy="118" r="4" style="animation-delay:1.35s" />
+            </g>
         </svg>
 
         <div class="max-w-[1200px] mx-auto px-6 md:px-12 w-full z-10">
