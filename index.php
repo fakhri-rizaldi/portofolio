@@ -477,7 +477,7 @@ $current = $data[$lang];
                 <!-- spine -->
                 <div class="absolute left-[7px] md:left-1/2 top-0 bottom-0 w-px" style="background:var(--hairline); transform:translateX(-50%)"></div>
 
-                <div class="space-y-10">
+                <div id="timelineContainer" class="space-y-10">
                 <?php foreach ($timeline as $i => $item): ?>
                     <div class="relative flex flex-col md:flex-row md:items-start gap-0 md:gap-8 group">
 
@@ -632,7 +632,7 @@ $current = $data[$lang];
                 <div class="section-header__line"></div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div id="projectsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <?php foreach ($current['projects'] as $index => $project): ?>
                 <div onclick="openProjectModal(<?= $index ?>)"
                      onkeydown="if(event.key==='Enter'||event.key===' '){openProjectModal(<?= $index ?>)}"

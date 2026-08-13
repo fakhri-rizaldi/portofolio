@@ -77,6 +77,90 @@ function switchLanguage(lang) {
         if (d.labels[key]) el.innerText = d.labels[key];
     });
 
+    // Update Projects Grid
+    const projectsGrid = document.getElementById('projectsGrid');
+    if (projectsGrid && d.projects) {
+        projectsGrid.innerHTML = d.projects.map((project, idx) => `
+            <div onclick="openProjectModal(${idx})"
+                 onkeydown="if(event.key==='Enter'||event.key===' '){openProjectModal(${idx})}"
+                 tabindex="0" role="button"
+                 aria-label="${lang === 'en' ? 'View project details' : 'Lihat detail proyek'} ${project.title}"
+                 class="card-base cursor-pointer group flex flex-col">
+                <div class="h-44 relative overflow-hidden" style="border-radius:10px 10px 0 0">
+                    ${project.preview_image ? `<img src="${project.preview_image}" alt="${project.title}" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">` : `<div class="absolute inset-0" style="background:var(--hairline)"></div>`}
+                    <div class="absolute inset-0" style="background:linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 60%)"></div>
+                    <h3 class="absolute bottom-3 left-4 right-4 font-display text-display-m text-white leading-tight">${project.title}</h3>
+                </div>
+                <div class="p-5 flex flex-col flex-1">
+                    <p class="text-body line-clamp-3 mb-4 flex-1" style="color:var(--ink-secondary)">${project.description}</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        ${project.tech_stack.map(tech => `<span class="badge">${tech}</span>`).join('')}
+                    </div>
+                    <span class="font-mono text-label flex items-center gap-1 transition-colors duration-150" style="color:var(--ink-secondary)">
+                        ${lang === 'en' ? 'View Details' : 'Lihat Detail'}
+                        <svg class="w-3 h-3 transition-transform duration-150 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                    </span>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    // Update Timeline (Experience & Education)
+    const timelineContainer = document.getElementById('timelineContainer');
+    if (timelineContainer && d.experience && d.education) {
+        const timeline = [];
+        d.experience.forEach(e => {
+            timeline.push({
+                period: e.period,
+                title: e.role,
+                subtitle: e.company,
+                description: e.description,
+                type: e.type || 'experience'
+            });
+        });
+        d.education.forEach(e => {
+            timeline.push({
+                period: e.period,
+                title: e.degree,
+                subtitle: e.institution,
+                description: e.description || '',
+                type: 'education'
+            });
+        });
+        timeline.sort((a, b) => {
+            const yB = (b.period.match(/\d{4}/) || [0])[0];
+            const yA = (a.period.match(/\d{4}/) || [0])[0];
+            return yB - yA;
+        });
+
+        timelineContainer.innerHTML = timeline.map((item, i) => {
+            const isLeft = i % 2 === 0;
+            const content = `
+                <div class="card-base p-6 inline-block text-left w-full">
+                    <span class="font-mono text-label uppercase" style="color:var(--signal-amber)">${item.period}</span>
+                    <h3 class="font-display text-display-m mt-2 mb-1" style="color:var(--ink-primary)">${item.title}</h3>
+                    <p class="font-mono text-label mb-3" style="color:var(--ink-secondary)">${item.subtitle}</p>
+                    ${item.description ? `<p class="text-body" style="color:var(--ink-secondary)">${item.description}</p>` : ''}
+                    <span class="badge mt-4">${item.type}</span>
+                </div>
+            `;
+
+            return `
+                <div class="relative flex flex-col md:flex-row md:items-start gap-0 md:gap-8 group">
+                    <div class="hidden md:block md:w-1/2 ${isLeft ? 'pr-10 text-right' : ''}">
+                        ${isLeft ? content : ''}
+                    </div>
+                    <div class="absolute left-[7px] md:left-1/2 top-6 -translate-x-1/2 z-10 w-3.5 h-3.5 rounded-full border-2 transition-transform duration-200 group-hover:scale-125"
+                         style="background:var(--bg-surface); border-color:var(--signal-amber)"></div>
+                    <div class="pl-8 md:pl-0 md:w-1/2 ${!isLeft ? 'md:pl-10' : ''}">
+                        <div class="md:hidden mb-4">${content}</div>
+                        ${!isLeft ? `<div class="hidden md:block">${content}</div>` : ''}
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
     // Update global projectsData for modal
     window.projectsData = d.projects;
 }
@@ -111,6 +195,7 @@ function openProjectModal(index) {
     if (linkBtn) {
         if (currentProject.link && currentProject.link !== '#') {
             linkBtn.href = currentProject.link;
+            linkBtn.innerHTML = `${currentLang === 'en' ? 'Visit Website' : 'Kunjungi Website'} <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>`;
             linkBtn.classList.remove('hidden');
         } else {
             linkBtn.classList.add('hidden');
