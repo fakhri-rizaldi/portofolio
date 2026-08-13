@@ -103,6 +103,14 @@
             from { width: 0; }
             to   { width: 100%; }
         }
+        @keyframes signal-float {
+            0%, 100% { transform: translate3d(0, 0, 0); opacity: .42; }
+            50% { transform: translate3d(0, -10px, 0); opacity: .7; }
+        }
+        @keyframes signal-scan {
+            from { transform: translateX(-35%); }
+            to { transform: translateX(135%); }
+        }
 
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after {
@@ -112,6 +120,18 @@
         }
 
         .hero-signal path { pathLength: 1; stroke-dasharray: 1; stroke-dashoffset: 1; }
+        .hero-motion-grid {
+            background-image: linear-gradient(var(--hairline) 1px, transparent 1px), linear-gradient(90deg, var(--hairline) 1px, transparent 1px);
+            background-size: 42px 42px;
+            mask-image: radial-gradient(circle at 62% 45%, black 0 34%, transparent 68%);
+            opacity: .34;
+            animation: signal-float 8s ease-in-out infinite;
+        }
+        .hero-motion-scan {
+            background: linear-gradient(90deg, transparent, var(--trace-teal), transparent);
+            opacity: .22;
+            animation: signal-scan 5.5s linear infinite;
+        }
 
         /* ── Component: Buttons ── */
         .btn-primary {
@@ -251,7 +271,7 @@
                 <!-- Right: theme toggle + hamburger -->
                 <div class="flex items-center gap-4 ml-auto">
                     <!-- Theme toggle: icon button -->
-                    <button onclick="toggleTheme()" aria-label="Toggle theme"
+                        <button id="themeToggle" type="button" aria-label="Toggle theme"
                             class="w-8 h-8 flex items-center justify-center rounded-btn transition-colors duration-150 focus-visible:outline focus-visible:outline-2"
                             style="border:1px solid var(--hairline); color:var(--ink-secondary)"
                             onmouseover="this.style.borderColor='var(--signal-amber)'"
@@ -299,6 +319,9 @@
     </nav>
 
     <section id="about" class="min-h-screen flex flex-col justify-center pt-24 pb-16 md:pt-0 md:pb-0 relative overflow-hidden" style="background:var(--bg-base)">
+
+        <div class="hero-motion-grid absolute inset-0 pointer-events-none z-0"></div>
+        <div class="hero-motion-scan absolute top-0 bottom-0 left-0 w-1/3 pointer-events-none z-0"></div>
 
         <!-- SVG Signal Line — signature element, spans full width -->
         <svg class="hero-signal absolute top-[38%] left-0 w-full h-24 pointer-events-none z-0" viewBox="0 0 1200 80" preserveAspectRatio="none" aria-hidden="true">

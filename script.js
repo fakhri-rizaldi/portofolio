@@ -1,13 +1,16 @@
 // Theme Toggle Logic
 function toggleTheme() {
-    if (document.documentElement.classList.contains('dark')) {
-        document.documentElement.classList.remove('dark');
+    const root = document.documentElement;
+    if (root.classList.contains('dark')) {
+        root.classList.remove('dark');
         localStorage.theme = 'light';
     } else {
-        document.documentElement.classList.add('dark');
+        root.classList.add('dark');
         localStorage.theme = 'dark';
     }
 }
+
+window.toggleTheme = toggleTheme;
 
 // Project Modal Logic
 let currentProject = null;
@@ -155,6 +158,9 @@ function closeProjectModal() {
 
 // Event Listeners
 document.addEventListener('DOMContentLoaded', function () {
+    const themeToggle = document.getElementById('themeToggle');
+    if (themeToggle) themeToggle.addEventListener('click', toggleTheme);
+
     // Keyboard Navigation
     document.addEventListener('keydown', function (event) {
         const modal = document.getElementById('projectModal');
