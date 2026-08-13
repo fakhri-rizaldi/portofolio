@@ -682,7 +682,7 @@ $data = require 'data.php';
     <script>
         const projectsData = <?= json_encode($data['projects']) ?>;
     </script>
-    <script src="script.js"></script>
+    <script src="script.js?v=20260813-theme-fix"></script>
 
     <!-- Contact Section -->
     <section id="contact" class="py-24 transition-colors duration-300" style="background:var(--bg-base); border-top:1px solid var(--hairline)">
