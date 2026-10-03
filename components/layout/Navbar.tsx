@@ -114,21 +114,6 @@ export function Navbar({ onOpenMobileMenu }: NavbarProps) {
       )}
     >
       <div className="container-main relative flex items-center justify-between min-h-[44px]">
-        {/* Brand Monogram */}
-        <a
-          href="#"
-          onClick={(e) => {
-            e.preventDefault();
-            if (lenis) lenis.scrollTo(0, { duration: 1.2 });
-            else window.scrollTo({ top: 0, behavior: "smooth" });
-          }}
-          className="font-mono font-bold text-sm tracking-tight text-[var(--fg)] flex items-center gap-1.5 transition-opacity hover:opacity-80 shrink-0"
-          aria-label="Kembali ke atas"
-        >
-          <span className="w-2 h-2 rounded-full bg-[var(--accent)]" />
-          <span>Fakhri<span className="text-[var(--accent)]">.</span></span>
-        </a>
-
         {/* Desktop Nav Items — Presisi di Sumbu Tengah Layar */}
         <nav
           className="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center gap-1 px-3.5 py-1.5 rounded-full border border-[var(--border)]/70 bg-[var(--bg)]/70 backdrop-blur-md shadow-sm"
