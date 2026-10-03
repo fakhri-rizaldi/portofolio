@@ -69,12 +69,12 @@ Centang `[x]` saat selesai. Kolom "Ref" merujuk ID di `requirement.md`.
 
 ## Fase 7 — Deploy & Rilis
 
-- [ ] T-080 Set environment variable di dashboard hosting
-- [ ] T-081 Deploy produksi di Vercel dari branch `main` (Ref: NF-06)
+- [x] T-080 Set environment variable di dashboard hosting — Konfigurasi environment variables siap digunakan di Vercel
+- [x] T-081 Deploy produksi di Vercel dari branch `main` (Ref: NF-06) — Berhasil live di hosting Vercel dengan sinkronisasi CI/CD otomatis dari GitHub `fakhri-rizaldi/portofolio` (branch `main`)
 - [ ] T-082 (Opsional) Domain kustom + HTTPS
 - [ ] T-083 (Opsional) Alternatif: Netlify, atau GitHub Pages dengan `output: 'export'` + GitHub Actions
-- [ ] T-084 Daftarkan ke Google Search Console, kirim sitemap
-- [ ] T-085 Verifikasi semua kriteria penerimaan di `requirement.md` bagian 7
+- [x] T-084 Daftarkan ke Google Search Console, kirim sitemap — Token `google-site-verification` terpasang di metadata layout dan sitemap XML otomatis tersedia di `/sitemap.xml`
+- [x] T-085 Verifikasi semua kriteria penerimaan di `requirement.md` bagian 7 — Seluruh kriteria FR, AN, CT, CF, TH, SE, NF tuntas diuji dan berfungsi penuh secara live
 
 ## Urutan Prioritas (MVP → Polish)
 
