@@ -32,7 +32,7 @@ export const viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://fakhridev.vercel.app"),
+  metadataBase: new URL("https://portofolio-seven-mu-45.vercel.app"),
   title: {
     default: "Muhammad Fakhri Rizaldi — Full Stack Engineer & Data Science",
     template: "%s | Muhammad Fakhri Rizaldi",
@@ -54,7 +54,7 @@ export const metadata: Metadata = {
     "Bandung",
     "Web Developer",
   ],
-  authors: [{ name: "Muhammad Fakhri Rizaldi", url: "https://fakhridev.vercel.app" }],
+  authors: [{ name: "Muhammad Fakhri Rizaldi", url: "https://portofolio-seven-mu-45.vercel.app" }],
   creator: "Muhammad Fakhri Rizaldi",
   alternates: {
     canonical: "/",
@@ -62,7 +62,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "id_ID",
-    url: "https://fakhridev.vercel.app",
+    url: "https://portofolio-seven-mu-45.vercel.app",
     siteName: "Muhammad Fakhri Rizaldi Portfolio",
     title: "Muhammad Fakhri Rizaldi — Full Stack Engineer & Data Science",
     description:

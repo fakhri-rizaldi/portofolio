@@ -188,7 +188,7 @@ export default function Image() {
               fontWeight: 600,
             }}
           >
-            fakhridev.vercel.app
+            portofolio-seven-mu-45.vercel.app
           </span>
         </div>
       </div>

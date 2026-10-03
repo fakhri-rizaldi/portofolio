@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { PROJECTS } from "@/content";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://fakhridev.vercel.app";
+  const baseUrl = "https://portofolio-seven-mu-45.vercel.app";
 
   // Rute statis utama
   const staticRoutes: MetadataRoute.Sitemap = [
