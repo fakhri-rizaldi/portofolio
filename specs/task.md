@@ -17,7 +17,7 @@ Centang `[x]` saat selesai. Kolom "Ref" merujuk ID di `requirement.md`.
 - [x] T-013 Instal taste-skill: `npx skills add https://github.com/Leonxlnx/taste-skill --skill "design-taste-frontend"`
 - [x] T-014 Buat struktur folder sesuai `design.md` bagian 2.2
 - [x] T-015 Buat `lib/gsap.ts` (registrasi plugin) dan `.env.local` (`NEXT_PUBLIC_FORM_ENDPOINT`)
-- [ ] T-016 Push ke repo GitHub, hubungkan ke Vercel (deploy awal kosong) (Ref: NF-06)
+- [x] T-016 Push ke repo GitHub, hubungkan ke Vercel (Ref: NF-06) — Berhasil di-push ke GitHub repository `https://github.com/fakhri-rizaldi/portofolio` (branch `main`) menggantikan kode lama secara bersih
 
 ## Fase 2 — Fondasi Desain
 
