@@ -116,17 +116,6 @@ export function Navbar({ onOpenMobileMenu }: NavbarProps) {
         )}
       >
         <div className="container-main relative flex items-center justify-between min-h-[44px]">
-          {/* Logo / Monogram Brand di Sisi Kiri */}
-          <a
-            href="#hero"
-            onClick={(e) => handleNavClick(e, "hero")}
-            className="font-mono text-sm font-bold tracking-tighter text-[var(--fg)] hover:text-[var(--accent)] transition-colors flex items-center gap-1.5 touch-manipulation py-2 pr-3"
-            aria-label="Kembali ke atas (Hero)"
-          >
-            <span className="w-2 h-2 rounded-full bg-[var(--accent)] inline-block animate-pulse" />
-            <span>FAKHRI<span className="text-[var(--accent)]">.</span></span>
-          </a>
-
           {/* Desktop Nav Items — Presisi di Sumbu Tengah Layar */}
           <nav
             className="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center gap-1 px-3.5 py-1.5 rounded-full border border-[var(--border)]/70 bg-[var(--bg)]/70 backdrop-blur-md shadow-sm"
