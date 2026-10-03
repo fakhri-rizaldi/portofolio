@@ -90,6 +90,9 @@ export const metadata: Metadata = {
     icon: "/icon",
     apple: "/apple-icon",
   },
+  verification: {
+    google: "JvmDbomssz5XfbmihvhhWWJteNIwfJKO4gMIkO7aya0",
+  },
 };
 
 export default function RootLayout({
