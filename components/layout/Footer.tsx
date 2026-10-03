@@ -118,6 +118,17 @@ export function Footer() {
               </li>
               <li>
                 <a
+                  href="https://github.com/fakhri-rizaldi"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-[var(--fg-muted)] hover:text-[var(--accent)] transition-colors inline-flex items-center gap-1.5"
+                >
+                  <span>GitHub</span>
+                  <span className="text-[10px]">↗</span>
+                </a>
+              </li>
+              <li>
+                <a
                   href="mailto:muhamadfakhri06@gmail.com"
                   className="text-[var(--fg-muted)] hover:text-[var(--accent)] transition-colors inline-flex items-center gap-1.5"
                 >

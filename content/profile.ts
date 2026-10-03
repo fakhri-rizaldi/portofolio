@@ -52,7 +52,7 @@ export const PROFILE: ProfileData = {
   socials: {
     linkedin: "https://www.linkedin.com/in/muhamad-fakhri-rizaldi-399193292/",
     instagram: "https://www.instagram.com/sobatfakhri/?hl=en",
-    github: "https://github.com/sobatfakhri",
+    github: "https://github.com/fakhri-rizaldi",
   },
   status: "Terbuka untuk pekerjaan / magang",
   resumes: {
